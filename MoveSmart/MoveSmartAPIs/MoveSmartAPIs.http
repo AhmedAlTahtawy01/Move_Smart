@@ -1,0 +1,6 @@
+@MoveSmartAPIs_HostAddress = http://localhost:5012
+
+GET {{MoveSmartAPIs_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
