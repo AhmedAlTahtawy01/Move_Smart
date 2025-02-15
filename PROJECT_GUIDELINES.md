@@ -19,25 +19,27 @@
 ## Task Assignments
 
 - **Hamdy**:
-  **Level 1**: ApplicationTypes, Users.
-  **Level 2**: Applications.
-  **Level 3**: JobOrder.
-  **Level 4**: Maintenance, Missions.
-  **Level 5**: MissionsJobOrders, MissionsVehicles.
+
+  - **Level 1**: ApplicationTypes, Users.
+  - **Level 2**: Applications.
+  - **Level 3**: JobOrder.
+  - **Level 4**: Maintenance, Missions.
+  - **Level 5**: MissionsJobOrders, MissionsVehicles.
 
   ##
 
 - **Abd-Elrahman**:
-  **Level 1**: Vehicles.
-  **Level 2**: Buses, Drivers.
-  **Level 3**: Employees, Patrols, Vacations, MaintenanceApplications, MissionsNotes.
+
+  - **Level 1**: Vehicles.
+  - **Level 2**: Buses, Drivers.
+  - **Level 3**: Employees, Patrols, Vacations, MaintenanceApplications, MissionsNotes.
 
   ##
 
 - **Kamal**:
-  **Level 1**: VehicleConsumables, SpareParts.
-  **Level 3**: ConsumablesPurchaseOrders, ConsumablesWithdrawApplications, SparePartsPurchaseOrders, SparePartsWithdrawApplications.
-  **Level 5**: ConsumablesReplacements, SparePartsReplacements.
+  - **Level 1**: VehicleConsumables, SpareParts.
+  - **Level 3**: ConsumablesPurchaseOrders, ConsumablesWithdrawApplications, SparePartsPurchaseOrders, SparePartsWithdrawApplications.
+  - **Level 5**: ConsumablesReplacements, SparePartsReplacements.
 
 ## General Guidelines
 
