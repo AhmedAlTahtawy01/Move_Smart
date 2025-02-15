@@ -2,11 +2,13 @@
 
 ## Naming Rules
 
-- **Private Variables**: \_PascalCase (e.g., `_UserName`, `_ProductCost`)
-- **Public Variables**: PascalCase (e.g., `UserName`, `ProductCost`)
+- **Private Variables**: \_camelCase (e.g., `_userName`, `_vehicleCost`)
+- **Public Variables**: camelCase (e.g., `userName`, `vehicleCost`)
 - **Functions**: PascalCase (e.g., `GetCarById()`, `GetUserData()`)
-- **Classes**: PascalCase (e.g., `UserController`, `ProductService`)
-- **Files**: PascalCase (e.g., `ProductService.cs`, `UserController.cs`)
+- **Classes**: PascalCase (e.g., `UserData`, `VehicleData`)
+- **Files in Data Access Layer**: PascalCaseDAL (e.g., `VehicleDAL.cs`, `UserDAL.cs`)
+- **Files in Business Layer**: PascalCaseBLL (e.g., `VehicleBLL.cs`, `UserBLL.cs`)
+- **Files in Presentation Layer**: PascalCaseController (e.g., `VehicleController.cs`, `UserController.cs`)
 
 ## Branch Naming Convention
 
