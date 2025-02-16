@@ -6,6 +6,7 @@
 - **Public Variables**: camelCase (e.g., `userName`, `vehicleCost`)
 - **Functions**: PascalCase (e.g., `GetCarById()`, `GetUserData()`)
 - **Classes**: PascalCase (e.g., `UserData`, `VehicleData`)
+- **Classes Properties**: PascalCase (e.g, `UserId`, `AccessRight`)
 - **Files in Data Access Layer**: PascalCaseDAL (e.g., `VehicleDAL.cs`, `UserDAL.cs`)
 - **Files in Business Layer**: PascalCaseBLL (e.g., `VehicleBLL.cs`, `UserBLL.cs`)
 - **Files in Presentation Layer**: PascalCaseController (e.g., `VehicleController.cs`, `UserController.cs`)
