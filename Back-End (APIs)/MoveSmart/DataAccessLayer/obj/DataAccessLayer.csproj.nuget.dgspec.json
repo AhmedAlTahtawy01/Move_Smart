@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "B:\\Graduation Project\\MoveSmart\\DataAccessLayer\\DataAccessLayer.csproj": {}
+    "B:\\Graduation Project\\Back-End (APIs)\\MoveSmart\\DataAccessLayer\\DataAccessLayer.csproj": {}
   },
   "projects": {
-    "B:\\Graduation Project\\MoveSmart\\DataAccessLayer\\DataAccessLayer.csproj": {
+    "B:\\Graduation Project\\Back-End (APIs)\\MoveSmart\\DataAccessLayer\\DataAccessLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "B:\\Graduation Project\\MoveSmart\\DataAccessLayer\\DataAccessLayer.csproj",
+        "projectUniqueName": "B:\\Graduation Project\\Back-End (APIs)\\MoveSmart\\DataAccessLayer\\DataAccessLayer.csproj",
         "projectName": "DataAccessLayer",
-        "projectPath": "B:\\Graduation Project\\MoveSmart\\DataAccessLayer\\DataAccessLayer.csproj",
+        "projectPath": "B:\\Graduation Project\\Back-End (APIs)\\MoveSmart\\DataAccessLayer\\DataAccessLayer.csproj",
         "packagesPath": "C:\\Users\\mlkal\\.nuget\\packages\\",
-        "outputPath": "B:\\Graduation Project\\MoveSmart\\DataAccessLayer\\obj\\",
+        "outputPath": "B:\\Graduation Project\\Back-End (APIs)\\MoveSmart\\DataAccessLayer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -49,6 +49,24 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.Data.SqlClient": {
+              "target": "Package",
+              "version": "[6.0.1, )"
+            },
+            "Microsoft.Extensions.Configuration": {
+              "target": "Package",
+              "version": "[9.0.2, )"
+            },
+            "Microsoft.Extensions.Configuration.Json": {
+              "target": "Package",
+              "version": "[9.0.2, )"
+            },
+            "MySql.Data": {
+              "target": "Package",
+              "version": "[9.2.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

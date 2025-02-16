@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "B:\\Graduation Project\\MoveSmart\\BusinessLayer\\BusinessLayer.csproj": {}
+    "B:\\Graduation Project\\Back-End (APIs)\\MoveSmart\\BusinessLayer\\BusinessLayer.csproj": {}
   },
   "projects": {
-    "B:\\Graduation Project\\MoveSmart\\BusinessLayer\\BusinessLayer.csproj": {
+    "B:\\Graduation Project\\Back-End (APIs)\\MoveSmart\\BusinessLayer\\BusinessLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "B:\\Graduation Project\\MoveSmart\\BusinessLayer\\BusinessLayer.csproj",
+        "projectUniqueName": "B:\\Graduation Project\\Back-End (APIs)\\MoveSmart\\BusinessLayer\\BusinessLayer.csproj",
         "projectName": "BusinessLayer",
-        "projectPath": "B:\\Graduation Project\\MoveSmart\\BusinessLayer\\BusinessLayer.csproj",
+        "projectPath": "B:\\Graduation Project\\Back-End (APIs)\\MoveSmart\\BusinessLayer\\BusinessLayer.csproj",
         "packagesPath": "C:\\Users\\mlkal\\.nuget\\packages\\",
-        "outputPath": "B:\\Graduation Project\\MoveSmart\\BusinessLayer\\obj\\",
+        "outputPath": "B:\\Graduation Project\\Back-End (APIs)\\MoveSmart\\BusinessLayer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

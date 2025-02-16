@@ -1,10 +1,14 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "B:\\Graduation Project\\MoveSmart\\",
+  "WorkspaceRootPath": "B:\\Graduation Project\\Back-End (APIs)\\MoveSmart\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{22BFC6B6-9828-4314-8E58-C6CD90B9BBE9}|MoveSmartAPIs\\MoveSmartAPIs.csproj|b:\\graduation project\\movesmart\\movesmartapis\\controllers\\classcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{22BFC6B6-9828-4314-8E58-C6CD90B9BBE9}|MoveSmartAPIs\\MoveSmartAPIs.csproj|solutionrelative:movesmartapis\\controllers\\classcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7234CD12-0089-4EE3-9FA9-DB389DE583F6}|DataAccessLayer\\DataAccessLayer.csproj|b:\\graduation project\\back-end (apis)\\movesmart\\dataaccesslayer\\repositories\\applicationdal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7234CD12-0089-4EE3-9FA9-DB389DE583F6}|DataAccessLayer\\DataAccessLayer.csproj|solutionrelative:dataaccesslayer\\repositories\\applicationdal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7234CD12-0089-4EE3-9FA9-DB389DE583F6}|DataAccessLayer\\DataAccessLayer.csproj|b:\\graduation project\\back-end (apis)\\movesmart\\dataaccesslayer\\repositories\\userdal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7234CD12-0089-4EE3-9FA9-DB389DE583F6}|DataAccessLayer\\DataAccessLayer.csproj|solutionrelative:dataaccesslayer\\repositories\\userdal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -31,14 +35,27 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "ClassController.cs",
-              "DocumentMoniker": "B:\\Graduation Project\\MoveSmart\\MoveSmartAPIs\\Controllers\\ClassController.cs",
-              "RelativeDocumentMoniker": "MoveSmartAPIs\\Controllers\\ClassController.cs",
-              "ToolTip": "B:\\Graduation Project\\MoveSmart\\MoveSmartAPIs\\Controllers\\ClassController.cs",
-              "RelativeToolTip": "MoveSmartAPIs\\Controllers\\ClassController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAHAAAAAAAAAA==",
+              "Title": "ApplicationDAL.cs",
+              "DocumentMoniker": "B:\\Graduation Project\\Back-End (APIs)\\MoveSmart\\DataAccessLayer\\Repositories\\ApplicationDAL.cs",
+              "RelativeDocumentMoniker": "DataAccessLayer\\Repositories\\ApplicationDAL.cs",
+              "ToolTip": "B:\\Graduation Project\\Back-End (APIs)\\MoveSmart\\DataAccessLayer\\Repositories\\ApplicationDAL.cs",
+              "RelativeToolTip": "DataAccessLayer\\Repositories\\ApplicationDAL.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-14T16:03:27.636Z",
+              "WhenOpened": "2025-02-16T20:15:35.889Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "UserDAL.cs",
+              "DocumentMoniker": "B:\\Graduation Project\\Back-End (APIs)\\MoveSmart\\DataAccessLayer\\Repositories\\UserDAL.cs",
+              "RelativeDocumentMoniker": "DataAccessLayer\\Repositories\\UserDAL.cs",
+              "ToolTip": "B:\\Graduation Project\\Back-End (APIs)\\MoveSmart\\DataAccessLayer\\Repositories\\UserDAL.cs",
+              "RelativeToolTip": "DataAccessLayer\\Repositories\\UserDAL.cs",
+              "ViewState": "AgIAACAAAAAAAAAAAAAQwDIAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-15T20:39:36.422Z",
               "EditorCaption": ""
             }
           ]
