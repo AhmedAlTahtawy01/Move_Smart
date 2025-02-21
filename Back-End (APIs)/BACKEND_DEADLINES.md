@@ -6,7 +6,7 @@
 
   - **Level 1**: ApplicationTypesDAL, UsersDAL.
   - **Level 2**: ApplicationsDAL.
-  - **DONE**
+  - **DONE** ✅
 
   ##
 
@@ -14,13 +14,13 @@
 
   - **Level 1**: VehiclesDAL.
   - **Level 2**: BusesDAL, DriversDAL.
-  - **DONE**
+  - **DONE** ✅
 
   ##
 
 - **Kamal**:
   - **Level 1**: VehicleConsumablesDAL, SparePartsDAL.
-  - **DONE**
+  - **DONE** ✅
 
 ##
 
@@ -29,7 +29,7 @@
 - **Hamdy**:
 
   - **Remaining DALs**
-  - **DONE**
+  - **DONE** ✅
 
   ##
 
