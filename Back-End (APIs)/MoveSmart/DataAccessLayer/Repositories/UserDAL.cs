@@ -31,11 +31,6 @@ namespace DataAccessLayer.Repositories
     {
         private static readonly string _connectionString = "Server=localhost;Database=MoveSmart;User Id=root;Password=ahmedroot;";
 
-        //public UserDAL(IConfiguration config)
-        //{
-        //    _connectionString = config.GetConnectionString("DefaultConnection");
-        //}
-
         private MySqlConnection GetConnection()
         {
             return new MySqlConnection(_connectionString);

@@ -84,7 +84,7 @@ namespace DataAccessLayer.Repositories
                     }
                     catch (MySqlException ex)
                     {
-                        throw new Exception("Databse error occurred in GetAllApplicationsAsync.", ex);
+                        throw new Exception("Database error occurred in GetAllApplicationsAsync.", ex);
                     }
                 }
             }
@@ -208,7 +208,7 @@ namespace DataAccessLayer.Repositories
             {
                 var query = @"
                     INSERT INTO applications (CreationDate, Status, ApplicationType, ApplicationDescription, CreatedByUser) 
-                    VALUES (@creationDate, @status, @applicationType, @applicationDescription, @createdByUser);
+                    VALUES (@creationDate, @status, @applicationType, @applicationDescription, @createdByUser)
                     SELECT LAST_INSERT_ID();";
 
                 using (var cmd = GetCommand(query, conn))
