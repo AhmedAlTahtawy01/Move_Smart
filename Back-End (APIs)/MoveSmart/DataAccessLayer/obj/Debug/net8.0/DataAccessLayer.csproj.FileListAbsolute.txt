@@ -1,0 +1,13 @@
+B:\Graduation Project\Back-End (APIs)\MoveSmart\DataAccessLayer\bin\Debug\net8.0\DataAccessLayer.deps.json
+B:\Graduation Project\Back-End (APIs)\MoveSmart\DataAccessLayer\bin\Debug\net8.0\DataAccessLayer.dll
+B:\Graduation Project\Back-End (APIs)\MoveSmart\DataAccessLayer\bin\Debug\net8.0\DataAccessLayer.pdb
+B:\Graduation Project\Back-End (APIs)\MoveSmart\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.csproj.AssemblyReference.cache
+B:\Graduation Project\Back-End (APIs)\MoveSmart\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.GeneratedMSBuildEditorConfig.editorconfig
+B:\Graduation Project\Back-End (APIs)\MoveSmart\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.AssemblyInfoInputs.cache
+B:\Graduation Project\Back-End (APIs)\MoveSmart\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.AssemblyInfo.cs
+B:\Graduation Project\Back-End (APIs)\MoveSmart\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.csproj.CoreCompileInputs.cache
+B:\Graduation Project\Back-End (APIs)\MoveSmart\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.sourcelink.json
+B:\Graduation Project\Back-End (APIs)\MoveSmart\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.dll
+B:\Graduation Project\Back-End (APIs)\MoveSmart\DataAccessLayer\obj\Debug\net8.0\refint\DataAccessLayer.dll
+B:\Graduation Project\Back-End (APIs)\MoveSmart\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.pdb
+B:\Graduation Project\Back-End (APIs)\MoveSmart\DataAccessLayer\obj\Debug\net8.0\ref\DataAccessLayer.dll
