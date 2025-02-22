@@ -447,23 +447,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\mlkal\\.nuget\\packages\\": {},
+    "C:\\Users\\MOHAMED\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "B:\\Graduation Project\\MoveSmart\\MoveSmartAPIs\\MoveSmartAPIs.csproj",
+      "projectUniqueName": "C:\\Users\\MOHAMED\\OneDrive\\Documents\\Full_Projects\\Move_Smart_APIs\\MoveSmart\\MoveSmartAPIs\\MoveSmartAPIs.csproj",
       "projectName": "MoveSmartAPIs",
-      "projectPath": "B:\\Graduation Project\\MoveSmart\\MoveSmartAPIs\\MoveSmartAPIs.csproj",
-      "packagesPath": "C:\\Users\\mlkal\\.nuget\\packages\\",
-      "outputPath": "B:\\Graduation Project\\MoveSmart\\MoveSmartAPIs\\obj\\",
+      "projectPath": "C:\\Users\\MOHAMED\\OneDrive\\Documents\\Full_Projects\\Move_Smart_APIs\\MoveSmart\\MoveSmartAPIs\\MoveSmartAPIs.csproj",
+      "packagesPath": "C:\\Users\\MOHAMED\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\MOHAMED\\OneDrive\\Documents\\Full_Projects\\Move_Smart_APIs\\MoveSmart\\MoveSmartAPIs\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\mlkal\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\MOHAMED\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
