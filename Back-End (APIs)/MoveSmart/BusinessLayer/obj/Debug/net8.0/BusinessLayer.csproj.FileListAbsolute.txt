@@ -1,0 +1,12 @@
+B:\Graduation Project\Back-End (APIs)\MoveSmart\BusinessLayer\bin\Debug\net8.0\BusinessLayer.deps.json
+B:\Graduation Project\Back-End (APIs)\MoveSmart\BusinessLayer\bin\Debug\net8.0\BusinessLayer.dll
+B:\Graduation Project\Back-End (APIs)\MoveSmart\BusinessLayer\bin\Debug\net8.0\BusinessLayer.pdb
+B:\Graduation Project\Back-End (APIs)\MoveSmart\BusinessLayer\obj\Debug\net8.0\BusinessLayer.GeneratedMSBuildEditorConfig.editorconfig
+B:\Graduation Project\Back-End (APIs)\MoveSmart\BusinessLayer\obj\Debug\net8.0\BusinessLayer.AssemblyInfoInputs.cache
+B:\Graduation Project\Back-End (APIs)\MoveSmart\BusinessLayer\obj\Debug\net8.0\BusinessLayer.AssemblyInfo.cs
+B:\Graduation Project\Back-End (APIs)\MoveSmart\BusinessLayer\obj\Debug\net8.0\BusinessLayer.csproj.CoreCompileInputs.cache
+B:\Graduation Project\Back-End (APIs)\MoveSmart\BusinessLayer\obj\Debug\net8.0\BusinessLayer.sourcelink.json
+B:\Graduation Project\Back-End (APIs)\MoveSmart\BusinessLayer\obj\Debug\net8.0\BusinessLayer.dll
+B:\Graduation Project\Back-End (APIs)\MoveSmart\BusinessLayer\obj\Debug\net8.0\refint\BusinessLayer.dll
+B:\Graduation Project\Back-End (APIs)\MoveSmart\BusinessLayer\obj\Debug\net8.0\BusinessLayer.pdb
+B:\Graduation Project\Back-End (APIs)\MoveSmart\BusinessLayer\obj\Debug\net8.0\ref\BusinessLayer.dll

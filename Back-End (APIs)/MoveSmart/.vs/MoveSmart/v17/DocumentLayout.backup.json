@@ -1,7 +1,16 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "B:\\Graduation Project\\Back-End (APIs)\\MoveSmart\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A3725F1C-D40F-4EDC-AA70-937BEC9DDA1E}|DataAccessLayer.Tests\\DataAccessLayer.Tests.csproj|b:\\graduation project\\back-end (apis)\\movesmart\\dataaccesslayer.tests\\userdaltests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A3725F1C-D40F-4EDC-AA70-937BEC9DDA1E}|DataAccessLayer.Tests\\DataAccessLayer.Tests.csproj|solutionrelative:dataaccesslayer.tests\\userdaltests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7234CD12-0089-4EE3-9FA9-DB389DE583F6}|DataAccessLayer\\DataAccessLayer.csproj|b:\\graduation project\\back-end (apis)\\movesmart\\dataaccesslayer\\repositories\\userdal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7234CD12-0089-4EE3-9FA9-DB389DE583F6}|DataAccessLayer\\DataAccessLayer.csproj|solutionrelative:dataaccesslayer\\repositories\\userdal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,7 +18,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -22,6 +31,36 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c64b9c2-e352-428e-a56d-0ace190b99a6}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e1b7d1f8-9b3c-49b1-8f4f-bfc63a88835d}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UserDALTests.cs",
+              "DocumentMoniker": "B:\\Graduation Project\\Back-End (APIs)\\MoveSmart\\DataAccessLayer.Tests\\UserDALTests.cs",
+              "RelativeDocumentMoniker": "DataAccessLayer.Tests\\UserDALTests.cs",
+              "ToolTip": "B:\\Graduation Project\\Back-End (APIs)\\MoveSmart\\DataAccessLayer.Tests\\UserDALTests.cs",
+              "RelativeToolTip": "DataAccessLayer.Tests\\UserDALTests.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAAwD0AAABMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-23T14:35:42.324Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "UserDAL.cs",
+              "DocumentMoniker": "B:\\Graduation Project\\Back-End (APIs)\\MoveSmart\\DataAccessLayer\\Repositories\\UserDAL.cs",
+              "RelativeDocumentMoniker": "DataAccessLayer\\Repositories\\UserDAL.cs",
+              "ToolTip": "B:\\Graduation Project\\Back-End (APIs)\\MoveSmart\\DataAccessLayer\\Repositories\\UserDAL.cs",
+              "RelativeToolTip": "DataAccessLayer\\Repositories\\UserDAL.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAA8wL0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-23T12:47:16.781Z",
+              "EditorCaption": ""
             }
           ]
         }

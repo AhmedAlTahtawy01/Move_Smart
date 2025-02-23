@@ -131,11 +131,11 @@ namespace DataAccessLayer.Repositories
                 var query = @"
                     SELECT MaintenanceID, MaintenanceDate, Description, MaintenanceApplicationID
                     FROM maintenance
-                    WHERE MaintenanceDate = @maintenanceDate"; ;
+                    WHERE DATE(MaintenanceDate) = @maintenanceDate";
 
                 using (var cmd = GetCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("@maintenanceDate", maintenanceDate);
+                    cmd.Parameters.AddWithValue("@maintenanceDate", maintenanceDate.Date);
 
                     try
                     {

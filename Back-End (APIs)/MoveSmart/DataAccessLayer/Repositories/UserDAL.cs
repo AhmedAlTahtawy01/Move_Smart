@@ -29,7 +29,7 @@ namespace DataAccessLayer.Repositories
 
     public class UserDAL
     {
-        private static readonly string _connectionString = "Server=localhost;Database=MoveSmart;User Id=root;Password=ahmedroot;";
+        private static readonly string _connectionString = "Server=localhost;Database=move_smart;User Id=root;Password=ahmedroot;";
 
         private MySqlConnection GetConnection()
         {
