@@ -6,26 +6,46 @@ using System.Text;
 using System.Threading.Tasks;
 using DataAccessLayer.Util;
 using MySqlConnector;
+using static DataAccessLayer.VehicleDTO;
 
 namespace DataAccessLayer
 {
     public class VehicleDTO
     {
+        public enum enVehicleStatus : byte
+        {
+            Available= 0,
+            Working = 1,
+            BrokenDown = 2
+        }
+        public enum enVehicleType : byte
+        {
+            Sedan = 0,
+            SingleCab = 1,
+            DoubleCab = 2,
+            Truck = 3,
+            Microbus = 4,
+            Minibus = 5,
+            Bus = 6,
+            Ambulance = 7
+        }
+
         public short VehicleID { get; set; }
         public string BrandName { get; set; }
         public string ModelName { get; set; }
         public string PlateNumbers { get; set; }
-        public byte VehicleType { get; set; }
+        public enVehicleType VehicleType { get; set; }
         public string AssociatedHospital { get; set; }
         public string AssociatedTask { get; set; }
-        public byte Status { get; set; }
+        public enVehicleStatus Status { get; set; }
         public byte FuelType { get; set; }
         public byte FuelConsumptionRate { get; set; }
         public byte OilConsumptionRate { get; set; }
 
         public VehicleDTO(short vehicleID, string brandName, string modelName, string plateNumbers,
-            byte vehicleType, string associatedHospital, string associatedTask, byte status,
-            byte fuelType, byte fuelConsumptionRate, byte oilConsumptionRate)
+            enVehicleType vehicleType, string associatedHospital, string associatedTask,
+            enVehicleStatus status, byte fuelType, byte fuelConsumptionRate,
+            byte oilConsumptionRate)
         {
             VehicleID = vehicleID;
             BrandName = brandName;
@@ -63,19 +83,19 @@ namespace DataAccessLayer
                             while (await reader.ReadAsync())
                             {
                                 vehiclesList.Add(new VehicleDTO
-                                (
-                                    Convert.ToInt16(reader["VehicleID"]),
-                                    (string)reader["BrandName"],
-                                    (string)reader["ModelName"],
-                                    (string)reader["PlateNumbers"],
-                                    Convert.ToByte(reader["VehicleType"]),
-                                    (string)reader["AssociatedHospital"],
-                                    (string)reader["AssociatedTask"],
-                                    Convert.ToByte(reader["Status"]),
-                                    Convert.ToByte(reader["FuelType"]),
-                                    Convert.ToByte(reader["FuelConsumptionRate"]),
-                                    Convert.ToByte(reader["OilConsumptionRate"])
-                                ));
+                                    (
+                                        Convert.ToInt16(reader["VehicleID"]),
+                                        (string)reader["BrandName"],
+                                        (string)reader["ModelName"],
+                                        (string)reader["PlateNumbers"],
+                                        (enVehicleType)Enum.Parse(typeof(enVehicleType), reader["VehicleType"].ToString() ?? string.Empty),
+                                        (string)reader["AssociatedHospital"],
+                                        (string)reader["AssociatedTask"],
+                                        (enVehicleStatus)Enum.Parse(typeof(enVehicleStatus), reader["Status"].ToString() ?? string.Empty),
+                                        Convert.ToByte(reader["FuelType"]),
+                                        Convert.ToByte(reader["FuelConsumptionRate"]),
+                                        Convert.ToByte(reader["OilConsumptionRate"])
+                                    ));
                             }
                         }
                     }
@@ -112,19 +132,19 @@ namespace DataAccessLayer
                             while (await reader.ReadAsync())
                             {
                                 vehiclesList.Add(new VehicleDTO
-                                (
-                                    Convert.ToInt16(reader["VehicleID"]),
-                                    (string)reader["BrandName"],
-                                    (string)reader["ModelName"],
-                                    (string)reader["PlateNumbers"],
-                                    Convert.ToByte(reader["VehicleType"]),
-                                    (string)reader["AssociatedHospital"],
-                                    (string)reader["AssociatedTask"],
-                                    Convert.ToByte(reader["Status"]),
-                                    Convert.ToByte(reader["FuelType"]),
-                                    Convert.ToByte(reader["FuelConsumptionRate"]),
-                                    Convert.ToByte(reader["OilConsumptionRate"])
-                                ));
+                                    (
+                                        Convert.ToInt16(reader["VehicleID"]),
+                                        (string)reader["BrandName"],
+                                        (string)reader["ModelName"],
+                                        (string)reader["PlateNumbers"],
+                                        (enVehicleType)Enum.Parse(typeof(enVehicleType), reader["VehicleType"].ToString() ?? string.Empty),
+                                        (string)reader["AssociatedHospital"],
+                                        (string)reader["AssociatedTask"],
+                                        (enVehicleStatus)Enum.Parse(typeof(enVehicleStatus), reader["Status"].ToString() ?? string.Empty),
+                                        Convert.ToByte(reader["FuelType"]),
+                                        Convert.ToByte(reader["FuelConsumptionRate"]),
+                                        Convert.ToByte(reader["OilConsumptionRate"])
+                                    ));
                             }
                         }
                     }
@@ -161,19 +181,19 @@ namespace DataAccessLayer
                             while (await reader.ReadAsync())
                             {
                                 vehiclesList.Add(new VehicleDTO
-                                (
-                                    Convert.ToInt16(reader["VehicleID"]),
-                                    (string)reader["BrandName"],
-                                    (string)reader["ModelName"],
-                                    (string)reader["PlateNumbers"],
-                                    Convert.ToByte(reader["VehicleType"]),
-                                    (string)reader["AssociatedHospital"],
-                                    (string)reader["AssociatedTask"],
-                                    Convert.ToByte(reader["Status"]),
-                                    Convert.ToByte(reader["FuelType"]),
-                                    Convert.ToByte(reader["FuelConsumptionRate"]),
-                                    Convert.ToByte(reader["OilConsumptionRate"])
-                                ));
+                                    (
+                                        Convert.ToInt16(reader["VehicleID"]),
+                                        (string)reader["BrandName"],
+                                        (string)reader["ModelName"],
+                                        (string)reader["PlateNumbers"],
+                                        (enVehicleType)Enum.Parse(typeof(enVehicleType), reader["VehicleType"].ToString() ?? string.Empty),
+                                        (string)reader["AssociatedHospital"],
+                                        (string)reader["AssociatedTask"],
+                                        (enVehicleStatus)Enum.Parse(typeof(enVehicleStatus), reader["Status"].ToString() ?? string.Empty),
+                                        Convert.ToByte(reader["FuelType"]),
+                                        Convert.ToByte(reader["FuelConsumptionRate"]),
+                                        Convert.ToByte(reader["OilConsumptionRate"])
+                                    ));
                             }
                         }
                     }
@@ -207,19 +227,19 @@ namespace DataAccessLayer
                             if (await reader.ReadAsync())
                             {
                                 return new VehicleDTO
-                                (
-                                    Convert.ToInt16(reader["VehicleID"]),
-                                    (string)reader["BrandName"],
-                                    (string)reader["ModelName"],
-                                    (string)reader["PlateNumbers"],
-                                    Convert.ToByte(reader["VehicleType"]),
-                                    (string)reader["AssociatedHospital"],
-                                    (string)reader["AssociatedTask"],
-                                    Convert.ToByte(reader["Status"]),
-                                    Convert.ToByte(reader["FuelType"]),
-                                    Convert.ToByte(reader["FuelConsumptionRate"]),
-                                    Convert.ToByte(reader["OilConsumptionRate"])
-                                );
+                                    (
+                                        Convert.ToInt16(reader["VehicleID"]),
+                                        (string)reader["BrandName"],
+                                        (string)reader["ModelName"],
+                                        (string)reader["PlateNumbers"],
+                                        (enVehicleType)Enum.Parse(typeof(enVehicleType), reader["VehicleType"].ToString() ?? string.Empty),
+                                        (string)reader["AssociatedHospital"],
+                                        (string)reader["AssociatedTask"],
+                                        (enVehicleStatus)Enum.Parse(typeof(enVehicleStatus), reader["Status"].ToString() ?? string.Empty),
+                                        Convert.ToByte(reader["FuelType"]),
+                                        Convert.ToByte(reader["FuelConsumptionRate"]),
+                                        Convert.ToByte(reader["OilConsumptionRate"])
+                                    );
                             }
                         }
                     }
@@ -253,19 +273,19 @@ namespace DataAccessLayer
                             if (await reader.ReadAsync())
                             {
                                 return new VehicleDTO
-                                (
-                                    Convert.ToInt16(reader["VehicleID"]),
-                                    (string)reader["BrandName"],
-                                    (string)reader["ModelName"],
-                                    (string)reader["PlateNumbers"],
-                                    Convert.ToByte(reader["VehicleType"]),
-                                    (string)reader["AssociatedHospital"],
-                                    (string)reader["AssociatedTask"],
-                                    Convert.ToByte(reader["Status"]),
-                                    Convert.ToByte(reader["FuelType"]),
-                                    Convert.ToByte(reader["FuelConsumptionRate"]),
-                                    Convert.ToByte(reader["OilConsumptionRate"])
-                                );
+                                    (
+                                        Convert.ToInt16(reader["VehicleID"]),
+                                        (string)reader["BrandName"],
+                                        (string)reader["ModelName"],
+                                        (string)reader["PlateNumbers"],
+                                        (enVehicleType)Enum.Parse(typeof(enVehicleType), reader["VehicleType"].ToString() ?? string.Empty),
+                                        (string)reader["AssociatedHospital"],
+                                        (string)reader["AssociatedTask"],
+                                        (enVehicleStatus)Enum.Parse(typeof(enVehicleStatus), reader["Status"].ToString() ?? string.Empty),
+                                        Convert.ToByte(reader["FuelType"]),
+                                        Convert.ToByte(reader["FuelConsumptionRate"]),
+                                        Convert.ToByte(reader["OilConsumptionRate"])
+                                    );
                             }
                         }
                     }
@@ -296,10 +316,10 @@ namespace DataAccessLayer
                         cmd.Parameters.AddWithValue("BrandName", newVehicle.BrandName);
                         cmd.Parameters.AddWithValue("ModelName", newVehicle.ModelName);
                         cmd.Parameters.AddWithValue("PlateNumbers", newVehicle.PlateNumbers);
-                        cmd.Parameters.AddWithValue("VehicleType", newVehicle.VehicleType);
+                        cmd.Parameters.AddWithValue("VehicleType", newVehicle.VehicleType.ToString());
                         cmd.Parameters.AddWithValue("AssociatedHospital", newVehicle.AssociatedHospital);
                         cmd.Parameters.AddWithValue("AssociatedTask", newVehicle.AssociatedTask);
-                        cmd.Parameters.AddWithValue("Status", newVehicle.Status);
+                        cmd.Parameters.AddWithValue("Status", newVehicle.Status.ToString());
                         cmd.Parameters.AddWithValue("FuelType", newVehicle.FuelType);
                         cmd.Parameters.AddWithValue("FuelConsumptionRate", newVehicle.FuelConsumptionRate);
                         cmd.Parameters.AddWithValue("OilConsumptionRate", newVehicle.OilConsumptionRate);
@@ -347,10 +367,10 @@ namespace DataAccessLayer
                         cmd.Parameters.AddWithValue("BrandName", updatedVehicle.BrandName);
                         cmd.Parameters.AddWithValue("ModelName", updatedVehicle.ModelName);
                         cmd.Parameters.AddWithValue("PlateNumbers", updatedVehicle.PlateNumbers);
-                        cmd.Parameters.AddWithValue("VehicleType", updatedVehicle.VehicleType);
+                        cmd.Parameters.AddWithValue("VehicleType", updatedVehicle.VehicleType.ToString());
                         cmd.Parameters.AddWithValue("AssociatedHospital", updatedVehicle.AssociatedHospital);
                         cmd.Parameters.AddWithValue("AssociatedTask", updatedVehicle.AssociatedTask);
-                        cmd.Parameters.AddWithValue("Status", updatedVehicle.Status);
+                        cmd.Parameters.AddWithValue("Status", updatedVehicle.Status.ToString());
                         cmd.Parameters.AddWithValue("FuelType", updatedVehicle.FuelType);
                         cmd.Parameters.AddWithValue("FuelConsumptionRate", updatedVehicle.FuelConsumptionRate);
                         cmd.Parameters.AddWithValue("OilConsumptionRate", updatedVehicle.OilConsumptionRate);

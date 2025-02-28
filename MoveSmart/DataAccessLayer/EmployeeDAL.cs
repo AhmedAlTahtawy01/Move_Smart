@@ -5,21 +5,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static DataAccessLayer.EmployeeDTO;
 
 namespace DataAccessLayer
 {
     public class EmployeeDTO
     {
+        public enum enTransportationSubscriptionStatus : byte
+        {
+            Valid = 0,
+            Expired = 1,
+            Unsubscribed = 2
+        }
+
         public int EmployeeID { get; set; }
         public string NationalNo { get; set; }
         public string Name { get; set; }
         public string JobTitle { get; set; }
         public string Phone { get; set; }
-        public byte TransportationSubscriptionStatus { get; set; }
-        public byte AssociatedBus { get; set; }
+        public enTransportationSubscriptionStatus TransportationSubscriptionStatus { get; set; }
 
         public EmployeeDTO(int employeeID, string nationalNo, string name, string jobTitle, string phone,
-            byte transportationSubscriptionStatus, byte associatedBus)
+            enTransportationSubscriptionStatus transportationSubscriptionStatus)
         {
             EmployeeID = employeeID;
             NationalNo = nationalNo;
@@ -27,7 +34,6 @@ namespace DataAccessLayer
             JobTitle = jobTitle;
             Phone = phone;
             TransportationSubscriptionStatus = transportationSubscriptionStatus;
-            AssociatedBus = associatedBus;
         }
     }
 
@@ -58,8 +64,7 @@ namespace DataAccessLayer
                                     (string)reader["Name"],
                                     (string)reader["JobTitle"],
                                     (string)reader["Phone"],
-                                    Convert.ToByte(reader["TransportationSubscriptionStatus"]),
-                                    Convert.ToByte(reader["AssociatedBus"])
+                                    (enTransportationSubscriptionStatus)Enum.Parse(typeof(enTransportationSubscriptionStatus), reader["TransportationSubscriptionStatus"].ToString() ?? string.Empty)
                                 ));
                             }
                         }
@@ -102,8 +107,7 @@ namespace DataAccessLayer
                                     (string)reader["Name"],
                                     (string)reader["JobTitle"],
                                     (string)reader["Phone"],
-                                    Convert.ToByte(reader["TransportationSubscriptionStatus"]),
-                                    Convert.ToByte(reader["AssociatedBus"])
+                                    (enTransportationSubscriptionStatus)Enum.Parse(typeof(enTransportationSubscriptionStatus), reader["TransportationSubscriptionStatus"].ToString() ?? string.Empty)
                                 ));
                             }
                         }
@@ -142,8 +146,7 @@ namespace DataAccessLayer
                                     (string)reader["Name"],
                                     (string)reader["JobTitle"],
                                     (string)reader["Phone"],
-                                    Convert.ToByte(reader["TransportationSubscriptionStatus"]),
-                                    Convert.ToByte(reader["AssociatedBus"])
+                                    (enTransportationSubscriptionStatus)Enum.Parse(typeof(enTransportationSubscriptionStatus), reader["TransportationSubscriptionStatus"].ToString() ?? string.Empty)
                                 );
                             }
                         }
@@ -182,8 +185,7 @@ namespace DataAccessLayer
                                     (string)reader["Name"],
                                     (string)reader["JobTitle"],
                                     (string)reader["Phone"],
-                                    Convert.ToByte(reader["TransportationSubscriptionStatus"]),
-                                    Convert.ToByte(reader["AssociatedBus"])
+                                    (enTransportationSubscriptionStatus)Enum.Parse(typeof(enTransportationSubscriptionStatus), reader["TransportationSubscriptionStatus"].ToString() ?? string.Empty)
                                 );
                             }
                         }
@@ -222,8 +224,7 @@ namespace DataAccessLayer
                                     (string)reader["Name"],
                                     (string)reader["JobTitle"],
                                     (string)reader["Phone"],
-                                    Convert.ToByte(reader["TransportationSubscriptionStatus"]),
-                                    Convert.ToByte(reader["AssociatedBus"])
+                                    (enTransportationSubscriptionStatus)Enum.Parse(typeof(enTransportationSubscriptionStatus), reader["TransportationSubscriptionStatus"].ToString() ?? string.Empty)
                                 );
                             }
                         }
@@ -241,9 +242,9 @@ namespace DataAccessLayer
         public static async Task<int?> AddNewEmployeeAsync(EmployeeDTO newEmployee)
         {
             string query = @"INSERT INTO Employees
-                            (EmployeeID, NationalNo, Name, JobTitle, Phone, TransportationSubscriptionStatus, AssociatedBus)
+                            (EmployeeID, NationalNo, Name, JobTitle, Phone, TransportationSubscriptionStatus)
                             VALUES
-                            (@EmployeeID, @NationalNo, @Name, @JobTitle, @Phone, @TransportationSubscriptionStatus, @AssociatedBus);
+                            (@EmployeeID, @NationalNo, @Name, @JobTitle, @Phone, @TransportationSubscriptionStatus);
                             SELECT LAST_INSERT_ID();";
 
             try
@@ -257,8 +258,7 @@ namespace DataAccessLayer
                         cmd.Parameters.AddWithValue("Name", newEmployee.Name);
                         cmd.Parameters.AddWithValue("JobTitle", newEmployee.JobTitle);
                         cmd.Parameters.AddWithValue("Phone", newEmployee.Phone);
-                        cmd.Parameters.AddWithValue("TransportationSubscriptionStatus", newEmployee.TransportationSubscriptionStatus);
-                        cmd.Parameters.AddWithValue("AssociatedBus", newEmployee.AssociatedBus);
+                        cmd.Parameters.AddWithValue("TransportationSubscriptionStatus", newEmployee.TransportationSubscriptionStatus.ToString());
 
                         await conn.OpenAsync();
 
@@ -285,8 +285,7 @@ namespace DataAccessLayer
                             Name = @Name,
                             JobTitle = @JobTitle,
                             Phone = @Phone,
-                            TransportationSubscriptionStatus = @TransportationSubscriptionStatus,
-                            AssociatedBus = @AssociatedBus
+                            TransportationSubscriptionStatus = @TransportationSubscriptionStatus
                             WHERE EmployeeID = @EmployeeID;";
 
             try
@@ -300,8 +299,7 @@ namespace DataAccessLayer
                         cmd.Parameters.AddWithValue("Name", updatedEmployee.Name);
                         cmd.Parameters.AddWithValue("JobTitle", updatedEmployee.JobTitle);
                         cmd.Parameters.AddWithValue("Phone", updatedEmployee.Phone);
-                        cmd.Parameters.AddWithValue("TransportationSubscriptionStatus", updatedEmployee.TransportationSubscriptionStatus);
-                        cmd.Parameters.AddWithValue("AssociatedBus", updatedEmployee.AssociatedBus);
+                        cmd.Parameters.AddWithValue("TransportationSubscriptionStatus", updatedEmployee.TransportationSubscriptionStatus.ToString());
 
                         await conn.OpenAsync();
 
@@ -347,7 +345,7 @@ namespace DataAccessLayer
         public static async Task<bool> IsEmployeeTransportationSubscriptionValidAsync(int employeeID)
         {
             string query = @"SELECT Valid = 1 FROM Employees
-                            WHERE EmployeeID = @EmployeeID AND TransportationSubscriptionStatus = 1;";
+                            WHERE EmployeeID = @EmployeeID AND TransportationSubscriptionStatus = 'Valid';";
 
             try
             {
@@ -368,31 +366,6 @@ namespace DataAccessLayer
                 Console.WriteLine(ex.Message);
             }
 
-            return false;
-        }
-
-        public static async Task<bool> IsEmployeeUsingBusAsync(int employeeID)
-        {
-            string query = @"SELECT UsingBus = 1 FROM Employees
-                            WHERE EmployeeID = @EmployeeID AND AssociatedBus IS NOT NULL;";
-            try
-            {
-                using (MySqlConnection conn = new MySqlConnection(ConnectionSettings.connectionString))
-                {
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                    {
-                        cmd.Parameters.AddWithValue("EmployeeID", employeeID);
-
-                        await conn.OpenAsync();
-
-                        return await cmd.ExecuteScalarAsync() != null;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
             return false;
         }
     }
