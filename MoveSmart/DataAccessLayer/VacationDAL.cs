@@ -37,7 +37,7 @@ namespace DataAccessLayer
 
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(ConnectionSettings.connectionString))
+                using (MySqlConnection conn = new MySqlConnection(ConnectionSettings.ConnectionString))
                 {
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
@@ -77,7 +77,7 @@ namespace DataAccessLayer
 
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(ConnectionSettings.connectionString))
+                using (MySqlConnection conn = new MySqlConnection(ConnectionSettings.ConnectionString))
                 {
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
@@ -118,7 +118,7 @@ namespace DataAccessLayer
 
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(ConnectionSettings.connectionString))
+                using (MySqlConnection conn = new MySqlConnection(ConnectionSettings.ConnectionString))
                 {
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
@@ -156,7 +156,7 @@ namespace DataAccessLayer
 
             try
             {
-                using(MySqlConnection conn = new MySqlConnection(ConnectionSettings.connectionString))
+                using(MySqlConnection conn = new MySqlConnection(ConnectionSettings.ConnectionString))
                 {
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
@@ -198,7 +198,7 @@ namespace DataAccessLayer
 
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(ConnectionSettings.connectionString))
+                using (MySqlConnection conn = new MySqlConnection(ConnectionSettings.ConnectionString))
                 {
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
@@ -236,7 +236,7 @@ namespace DataAccessLayer
 
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(ConnectionSettings.connectionString))
+                using (MySqlConnection conn = new MySqlConnection(ConnectionSettings.ConnectionString))
                 {
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
@@ -266,7 +266,7 @@ namespace DataAccessLayer
                             WHERE VacationID = @VacationID;";
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(ConnectionSettings.connectionString))
+                using (MySqlConnection conn = new MySqlConnection(ConnectionSettings.ConnectionString))
                 {
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
@@ -293,7 +293,7 @@ namespace DataAccessLayer
 
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(ConnectionSettings.connectionString))
+                using (MySqlConnection conn = new MySqlConnection(ConnectionSettings.ConnectionString))
                 {
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {

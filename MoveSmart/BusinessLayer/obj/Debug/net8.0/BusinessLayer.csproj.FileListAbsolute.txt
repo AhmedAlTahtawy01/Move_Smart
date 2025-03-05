@@ -10,3 +10,15 @@ C:\Users\MOHAMED\OneDrive\Documents\Full_Projects\Move_Smart_APIs\MoveSmart\Busi
 C:\Users\MOHAMED\OneDrive\Documents\Full_Projects\Move_Smart_APIs\MoveSmart\BusinessLayer\obj\Debug\net8.0\refint\BusinessLayer.dll
 C:\Users\MOHAMED\OneDrive\Documents\Full_Projects\Move_Smart_APIs\MoveSmart\BusinessLayer\obj\Debug\net8.0\BusinessLayer.pdb
 C:\Users\MOHAMED\OneDrive\Documents\Full_Projects\Move_Smart_APIs\MoveSmart\BusinessLayer\obj\Debug\net8.0\ref\BusinessLayer.dll
+C:\Users\MOHAMED\OneDrive\Documents\Move_Smart_APIs\MoveSmart\BusinessLayer\bin\Debug\net8.0\BusinessLayer.deps.json
+C:\Users\MOHAMED\OneDrive\Documents\Move_Smart_APIs\MoveSmart\BusinessLayer\bin\Debug\net8.0\BusinessLayer.dll
+C:\Users\MOHAMED\OneDrive\Documents\Move_Smart_APIs\MoveSmart\BusinessLayer\bin\Debug\net8.0\BusinessLayer.pdb
+C:\Users\MOHAMED\OneDrive\Documents\Move_Smart_APIs\MoveSmart\BusinessLayer\obj\Debug\net8.0\BusinessLayer.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\MOHAMED\OneDrive\Documents\Move_Smart_APIs\MoveSmart\BusinessLayer\obj\Debug\net8.0\BusinessLayer.AssemblyInfoInputs.cache
+C:\Users\MOHAMED\OneDrive\Documents\Move_Smart_APIs\MoveSmart\BusinessLayer\obj\Debug\net8.0\BusinessLayer.AssemblyInfo.cs
+C:\Users\MOHAMED\OneDrive\Documents\Move_Smart_APIs\MoveSmart\BusinessLayer\obj\Debug\net8.0\BusinessLayer.csproj.CoreCompileInputs.cache
+C:\Users\MOHAMED\OneDrive\Documents\Move_Smart_APIs\MoveSmart\BusinessLayer\obj\Debug\net8.0\BusinessLayer.sourcelink.json
+C:\Users\MOHAMED\OneDrive\Documents\Move_Smart_APIs\MoveSmart\BusinessLayer\obj\Debug\net8.0\BusinessLayer.dll
+C:\Users\MOHAMED\OneDrive\Documents\Move_Smart_APIs\MoveSmart\BusinessLayer\obj\Debug\net8.0\refint\BusinessLayer.dll
+C:\Users\MOHAMED\OneDrive\Documents\Move_Smart_APIs\MoveSmart\BusinessLayer\obj\Debug\net8.0\BusinessLayer.pdb
+C:\Users\MOHAMED\OneDrive\Documents\Move_Smart_APIs\MoveSmart\BusinessLayer\obj\Debug\net8.0\ref\BusinessLayer.dll

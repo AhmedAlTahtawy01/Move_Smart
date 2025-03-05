@@ -30,6 +30,13 @@ namespace DataAccessLayer
             Ambulance = 7
         }
 
+        public enum enFuelType : byte
+        {
+            Gasoline = 0,
+            Diesel = 1,
+            NaturalGas = 2
+        }
+
         public short VehicleID { get; set; }
         public string BrandName { get; set; }
         public string ModelName { get; set; }
@@ -38,13 +45,14 @@ namespace DataAccessLayer
         public string AssociatedHospital { get; set; }
         public string AssociatedTask { get; set; }
         public enVehicleStatus Status { get; set; }
-        public byte FuelType { get; set; }
+        public int TotalKilometersMoved { get; set; }
+        public enFuelType FuelType { get; set; }
         public byte FuelConsumptionRate { get; set; }
         public byte OilConsumptionRate { get; set; }
 
         public VehicleDTO(short vehicleID, string brandName, string modelName, string plateNumbers,
             enVehicleType vehicleType, string associatedHospital, string associatedTask,
-            enVehicleStatus status, byte fuelType, byte fuelConsumptionRate,
+            enVehicleStatus status, int totalKilometersMoved, enFuelType fuelType, byte fuelConsumptionRate,
             byte oilConsumptionRate)
         {
             VehicleID = vehicleID;
@@ -55,6 +63,7 @@ namespace DataAccessLayer
             AssociatedHospital = associatedHospital;
             AssociatedTask = associatedTask;
             Status = status;
+            TotalKilometersMoved = totalKilometersMoved;
             FuelType = fuelType;
             FuelConsumptionRate = fuelConsumptionRate;
             OilConsumptionRate = oilConsumptionRate;
@@ -72,7 +81,7 @@ namespace DataAccessLayer
 
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(ConnectionSettings.connectionString))
+                using (MySqlConnection conn = new MySqlConnection(ConnectionSettings.ConnectionString))
                 {
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
@@ -92,7 +101,8 @@ namespace DataAccessLayer
                                         (string)reader["AssociatedHospital"],
                                         (string)reader["AssociatedTask"],
                                         (enVehicleStatus)Enum.Parse(typeof(enVehicleStatus), reader["Status"].ToString() ?? string.Empty),
-                                        Convert.ToByte(reader["FuelType"]),
+                                        Convert.ToInt32(reader["TotalKilometersMoved"]),
+                                        (enFuelType)Enum.Parse(typeof(enFuelType), reader["FuelType"].ToString() ?? string.Empty),
                                         Convert.ToByte(reader["FuelConsumptionRate"]),
                                         Convert.ToByte(reader["OilConsumptionRate"])
                                     ));
@@ -119,7 +129,7 @@ namespace DataAccessLayer
 
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(ConnectionSettings.connectionString))
+                using (MySqlConnection conn = new MySqlConnection(ConnectionSettings.ConnectionString))
                 {
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
@@ -141,7 +151,8 @@ namespace DataAccessLayer
                                         (string)reader["AssociatedHospital"],
                                         (string)reader["AssociatedTask"],
                                         (enVehicleStatus)Enum.Parse(typeof(enVehicleStatus), reader["Status"].ToString() ?? string.Empty),
-                                        Convert.ToByte(reader["FuelType"]),
+                                        Convert.ToInt32(reader["TotalKilometersMoved"]),
+                                        (enFuelType)Enum.Parse(typeof(enFuelType), reader["FuelType"].ToString() ?? string.Empty),
                                         Convert.ToByte(reader["FuelConsumptionRate"]),
                                         Convert.ToByte(reader["OilConsumptionRate"])
                                     ));
@@ -168,7 +179,7 @@ namespace DataAccessLayer
 
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(ConnectionSettings.connectionString))
+                using (MySqlConnection conn = new MySqlConnection(ConnectionSettings.ConnectionString))
                 {
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
@@ -190,7 +201,8 @@ namespace DataAccessLayer
                                         (string)reader["AssociatedHospital"],
                                         (string)reader["AssociatedTask"],
                                         (enVehicleStatus)Enum.Parse(typeof(enVehicleStatus), reader["Status"].ToString() ?? string.Empty),
-                                        Convert.ToByte(reader["FuelType"]),
+                                        Convert.ToInt32(reader["TotalKilometersMoved"]),
+                                        (enFuelType)Enum.Parse(typeof(enFuelType), reader["FuelType"].ToString() ?? string.Empty),
                                         Convert.ToByte(reader["FuelConsumptionRate"]),
                                         Convert.ToByte(reader["OilConsumptionRate"])
                                     ));
@@ -214,7 +226,7 @@ namespace DataAccessLayer
 
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(ConnectionSettings.connectionString))
+                using (MySqlConnection conn = new MySqlConnection(ConnectionSettings.ConnectionString))
                 {
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
@@ -236,7 +248,8 @@ namespace DataAccessLayer
                                         (string)reader["AssociatedHospital"],
                                         (string)reader["AssociatedTask"],
                                         (enVehicleStatus)Enum.Parse(typeof(enVehicleStatus), reader["Status"].ToString() ?? string.Empty),
-                                        Convert.ToByte(reader["FuelType"]),
+                                        Convert.ToInt32(reader["TotalKilometersMoved"]),
+                                        (enFuelType)Enum.Parse(typeof(enFuelType), reader["FuelType"].ToString() ?? string.Empty),
                                         Convert.ToByte(reader["FuelConsumptionRate"]),
                                         Convert.ToByte(reader["OilConsumptionRate"])
                                     );
@@ -260,7 +273,7 @@ namespace DataAccessLayer
 
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(ConnectionSettings.connectionString))
+                using (MySqlConnection conn = new MySqlConnection(ConnectionSettings.ConnectionString))
                 {
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
@@ -282,7 +295,8 @@ namespace DataAccessLayer
                                         (string)reader["AssociatedHospital"],
                                         (string)reader["AssociatedTask"],
                                         (enVehicleStatus)Enum.Parse(typeof(enVehicleStatus), reader["Status"].ToString() ?? string.Empty),
-                                        Convert.ToByte(reader["FuelType"]),
+                                        Convert.ToInt32(reader["TotalKilometersMoved"]),
+                                        (enFuelType)Enum.Parse(typeof(enFuelType), reader["FuelType"].ToString() ?? string.Empty),
                                         Convert.ToByte(reader["FuelConsumptionRate"]),
                                         Convert.ToByte(reader["OilConsumptionRate"])
                                     );
@@ -302,14 +316,14 @@ namespace DataAccessLayer
         public static async Task<short?> AddNewVehicleAsync(VehicleDTO newVehicle)
         {
             string query = @"INSERT INTO Vehicles
-                            (BrandName, ModelName, PlateNumbers, VehicleType, AssociatedHospital, AssociatedTask, Status, FuelType, FuelConsumptionRate, OilConsumptionRate)
+                            (BrandName, ModelName, PlateNumbers, VehicleType, AssociatedHospital, AssociatedTask, Status, TotalKilometersMoved, FuelType, FuelConsumptionRate, OilConsumptionRate)
                             VALUES
-                            (@BrandName, @ModelName, @PlateNumbers, @VehicleType, @AssociatedHospital, @AssociatedTask, @Status, @FuelType, @FuelConsumptionRate, @OilConsumptionRate);
+                            (@BrandName, @ModelName, @PlateNumbers, @VehicleType, @AssociatedHospital, @AssociatedTask, @Status, @TotalKilometersMoved, @FuelType, @FuelConsumptionRate, @OilConsumptionRate);
                             SELECT LAST_INSERT_ID();";
 
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(ConnectionSettings.connectionString))
+                using (MySqlConnection conn = new MySqlConnection(ConnectionSettings.ConnectionString))
                 {
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
@@ -320,7 +334,8 @@ namespace DataAccessLayer
                         cmd.Parameters.AddWithValue("AssociatedHospital", newVehicle.AssociatedHospital);
                         cmd.Parameters.AddWithValue("AssociatedTask", newVehicle.AssociatedTask);
                         cmd.Parameters.AddWithValue("Status", newVehicle.Status.ToString());
-                        cmd.Parameters.AddWithValue("FuelType", newVehicle.FuelType);
+                        cmd.Parameters.AddWithValue("TotalKilometersMoved", newVehicle.TotalKilometersMoved);
+                        cmd.Parameters.AddWithValue("FuelType", newVehicle.FuelType.ToString());
                         cmd.Parameters.AddWithValue("FuelConsumptionRate", newVehicle.FuelConsumptionRate);
                         cmd.Parameters.AddWithValue("OilConsumptionRate", newVehicle.OilConsumptionRate);
 
@@ -352,6 +367,7 @@ namespace DataAccessLayer
                             AssociatedHospital = @AssociatedHospital,
                             AssociatedTask = @AssociatedTask,
                             Status = @Status,
+                            TotalKilometersMoved = @TotalKilometersMoved,
                             FuelType = @FuelType,
                             FuelConsumptionRate = @FuelConsumptionRate,
                             OilConsumptionRate = @OilConsumptionRate
@@ -359,7 +375,7 @@ namespace DataAccessLayer
 
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(ConnectionSettings.connectionString))
+                using (MySqlConnection conn = new MySqlConnection(ConnectionSettings.ConnectionString))
                 {
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
@@ -371,7 +387,8 @@ namespace DataAccessLayer
                         cmd.Parameters.AddWithValue("AssociatedHospital", updatedVehicle.AssociatedHospital);
                         cmd.Parameters.AddWithValue("AssociatedTask", updatedVehicle.AssociatedTask);
                         cmd.Parameters.AddWithValue("Status", updatedVehicle.Status.ToString());
-                        cmd.Parameters.AddWithValue("FuelType", updatedVehicle.FuelType);
+                        cmd.Parameters.AddWithValue("TotalKilometersMoved", updatedVehicle.TotalKilometersMoved);
+                        cmd.Parameters.AddWithValue("FuelType", updatedVehicle.FuelType.ToString());
                         cmd.Parameters.AddWithValue("FuelConsumptionRate", updatedVehicle.FuelConsumptionRate);
                         cmd.Parameters.AddWithValue("OilConsumptionRate", updatedVehicle.OilConsumptionRate);
 
@@ -395,7 +412,7 @@ namespace DataAccessLayer
                             WHERE PlateNumbers = @PlateNumbers;";
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(ConnectionSettings.connectionString))
+                using (MySqlConnection conn = new MySqlConnection(ConnectionSettings.ConnectionString))
                 {
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {

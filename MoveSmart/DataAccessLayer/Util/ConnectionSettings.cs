@@ -8,6 +8,6 @@ namespace DataAccessLayer.Util
 {
     internal class ConnectionSettings
     {
-        public const string connectionString = "Server=localhost;Database=Move_Smart;User ID=root;Password=50700651;SslMode=Preferred;";
+        public const string ConnectionString = "Server=localhost;Database=Move_Smart;User ID=root;Password=50700651;SslMode=Preferred;";
     }
 }

@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\MOHAMED\\OneDrive\\Documents\\Full_Projects\\Move_Smart_APIs\\MoveSmart\\BusinessLayer\\BusinessLayer.csproj",
+      "projectUniqueName": "C:\\Users\\MOHAMED\\OneDrive\\Documents\\Move_Smart_APIs\\MoveSmart\\BusinessLayer\\BusinessLayer.csproj",
       "projectName": "BusinessLayer",
-      "projectPath": "C:\\Users\\MOHAMED\\OneDrive\\Documents\\Full_Projects\\Move_Smart_APIs\\MoveSmart\\BusinessLayer\\BusinessLayer.csproj",
+      "projectPath": "C:\\Users\\MOHAMED\\OneDrive\\Documents\\Move_Smart_APIs\\MoveSmart\\BusinessLayer\\BusinessLayer.csproj",
       "packagesPath": "C:\\Users\\MOHAMED\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\MOHAMED\\OneDrive\\Documents\\Full_Projects\\Move_Smart_APIs\\MoveSmart\\BusinessLayer\\obj\\",
+      "outputPath": "C:\\Users\\MOHAMED\\OneDrive\\Documents\\Move_Smart_APIs\\MoveSmart\\BusinessLayer\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
