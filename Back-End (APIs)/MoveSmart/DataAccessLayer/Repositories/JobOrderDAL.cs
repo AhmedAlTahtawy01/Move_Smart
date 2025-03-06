@@ -10,23 +10,24 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Repositories
 {
-    public class JobOrder
+    public class JobOrder : Application
     {
         public int OrderId { get; set; }
-        public int ApplicationId { get; set; }
         public int VehicleId { get; set; }
         public int DriverId { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public TimeSpan OrderTime { get; set; }
+        public TimeSpan StartTime { get; set; }
+        public TimeSpan EndTime { get; set; }
         public string Destination { get; set; }
         public int OdometerBefore { get; set; }
         public int OdometerAfter { get; set; }
 
-        public JobOrder(int orderId, int applicationId, int vehicleId, int driverId,
-            DateTime startDate, DateTime endDate, TimeSpan orderTime,
-            string destination,
+        public JobOrder(int orderId, int applicationId, DateTime creationTime, enStatus status, int applicationType,
+            string applicationDescription, int createdByUser,
+            int vehicleId, int driverId, DateTime startDate, DateTime endDate, TimeSpan startTime, TimeSpan endTime, string destination,
             int odometerBefore, int odometerAfter) 
+            : base(applicationId, creationTime, status, applicationType, applicationDescription, createdByUser)
         {
             this.OrderId = orderId;
             this.ApplicationId = applicationId;
@@ -34,7 +35,8 @@ namespace DataAccessLayer.Repositories
             this.DriverId = driverId;
             this.StartDate = startDate;
             this.EndDate = endDate;
-            this.OrderTime = orderTime;
+            this.StartTime = startTime;
+            this.EndTime = endTime;
             this.Destination = destination;
             this.OdometerBefore = odometerBefore;
             this.OdometerAfter = odometerAfter;
@@ -45,7 +47,7 @@ namespace DataAccessLayer.Repositories
 
     public class JobOrderDAL
     {
-        private static readonly string _connectionString = "Server=localhost;Database=MoveSmart;User Id=root;Password=ahmedroot;";
+        private static readonly string _connectionString = "Server=localhost;Database=move_smart;User Id=root;Password=ahmedroot;";
 
         private MySqlConnection GetConnection()
         {
@@ -61,19 +63,29 @@ namespace DataAccessLayer.Repositories
     
         private JobOrder MapJobOrder(DbDataReader reader)
         {
+            enStatus status;
+            
+            Enum.TryParse(reader.GetString(reader.GetOrdinal("Status")).Trim(), true, out status);
+
+
             return new JobOrder
             (
-                reader.GetInt32("OrderID"),
-                reader.GetInt32("ApplicationID"),
-                reader.GetInt32("VehicleID"),
-                reader.GetInt32("DriverID"),
-                reader.GetDateTime("OrderStartDate"),
-                reader.GetDateTime("OrderEndDate"),
-                TimeSpan.TryParse(reader["OrderTime"]?.ToString(), out TimeSpan orderTime) ? orderTime : TimeSpan.Zero,
-                reader.GetString("Distination"),
-                reader.GetInt32("KilometersCounterBeforeOrder"),
-                reader.IsDBNull(reader.GetOrdinal("KilometersCounterAfterOrder"))
-                ? 0 : reader.GetInt32("KilometersCounterAfterOrder")
+                reader.GetInt32(reader.GetOrdinal("OrderID")),
+                reader.GetInt32(reader.GetOrdinal("ApplicationID")),
+                reader.GetDateTime(reader.GetOrdinal("CreationDate")),
+                status,
+                reader.GetInt32(reader.GetOrdinal("ApplicationType")),
+                reader.GetString(reader.GetOrdinal("ApplicationDescription")),
+                reader.GetInt32(reader.GetOrdinal("CreatedByUserID")),
+                reader.GetInt32(reader.GetOrdinal("VehicleID")),
+                reader.GetInt32(reader.GetOrdinal("DriverID")),
+                reader.GetDateTime(reader.GetOrdinal("OrderStartDate")),
+                reader.GetDateTime(reader.GetOrdinal("OrderEndDate")),
+                TimeSpan.TryParse(reader["OrderStartTime"]?.ToString(), out TimeSpan startTime) ? startTime : TimeSpan.Zero,
+                TimeSpan.TryParse(reader["OrderEndTime"]?.ToString(), out TimeSpan endTime) ? endTime : TimeSpan.Zero,
+                reader.GetString(reader.GetOrdinal("Destination")),
+                reader.GetInt32(reader.GetOrdinal("KilometersCounterBeforeOrder")),
+                reader.IsDBNull(reader.GetOrdinal("KilometersCounterAfterOrder")) ? 0 : reader.GetInt32(reader.GetOrdinal("KilometersCounterAfterOrder"))
             );
         }
     
@@ -84,8 +96,10 @@ namespace DataAccessLayer.Repositories
             await using (var conn = GetConnection())
             {
                 var query = @"
-                    SELECT OrderID, ApplicationID, VehicleID, DriverID, OrderStartDate, OrderEndDate, OrderTime, Distination, KilometersCounterBeforeOrder, KilometersCounterAfterOrder
-                    FROM joborders";
+                    SELECT j.OrderID, j.VehicleID, j.DriverID, j.OrderStartDate, j.OrderEndDate, j.OrderStartTime, j.OrderEndTime, j.Destination, j.KilometersCounterBeforeOrder, j.KilometersCounterAfterOrder,
+                           a.ApplicationID, a.CreationDate, a.Status, a.ApplicationType, a.ApplicationDescription, a.CreatedByUser
+                    FROM joborders j
+                    JOIN applications a ON j.ApplicationID = a.ApplicationID";
 
                 using (var cmd = GetCommand(query, conn))
                 {
@@ -116,7 +130,7 @@ namespace DataAccessLayer.Repositories
             await using (var conn = GetConnection())
             {
                 var query = @"
-                    SELECT OrderID, ApplicationID, VehicleID, DriverID, OrderStartDate, OrderEndDate, OrderTime, Distination, KilometersCounterBeforeOrder, KilometersCounterAfterOrder
+                    SELECT OrderID, ApplicationID, VehicleID, DriverID, OrderStartDate, OrderEndDate, OrderStartTime, OrderEndTime, Distination, KilometersCounterBeforeOrder, KilometersCounterAfterOrder
                     FROM joborders
                     WHERE OrderID = @orderId";
 
@@ -154,7 +168,7 @@ namespace DataAccessLayer.Repositories
             await using (var conn = GetConnection())
             {
                 var query = @"
-                    SELECT OrderID, ApplicationID, VehicleID, DriverID, OrderStartDate, OrderEndDate, OrderTime, Distination, KilometersCounterBeforeOrder, KilometersCounterAfterOrder
+                    SELECT OrderID, ApplicationID, VehicleID, DriverID, OrderStartDate, OrderEndDate, OrderStartTime, OrderEndTime, Distination, KilometersCounterBeforeOrder, KilometersCounterAfterOrder
                     FROM joborders
                     WHERE ApplicationID = @applicationId";
 
@@ -190,7 +204,7 @@ namespace DataAccessLayer.Repositories
             await using (var conn = GetConnection())
             {
                 var query = @"
-                    SELECT OrderID, ApplicationID, VehicleID, DriverID, OrderStartDate, OrderEndDate, OrderTime, Distination, KilometersCounterBeforeOrder, KilometersCounterAfterOrder
+                    SELECT OrderID, ApplicationID, VehicleID, DriverID, OrderStartDate, OrderEndDate, OrderStartTime, OrderEndTime, Distination, KilometersCounterBeforeOrder, KilometersCounterAfterOrder
                     FROM joborders
                     WHERE VehicleID = @vehicleId";
 
@@ -226,7 +240,7 @@ namespace DataAccessLayer.Repositories
             await using (var conn = GetConnection())
             {
                 var query = @"
-                    SELECT OrderID, ApplicationID, VehicleID, DriverID, OrderStartDate, OrderEndDate, OrderTime, Distination, KilometersCounterBeforeOrder, KilometersCounterAfterOrder
+                    SELECT OrderID, ApplicationID, VehicleID, DriverID, OrderStartDate, OrderEndDate, OrderStartTime, OrderEndTime Distination, KilometersCounterBeforeOrder, KilometersCounterAfterOrder
                     FROM joborders
                     WHERE DriverID = @driverId";
 
@@ -262,7 +276,7 @@ namespace DataAccessLayer.Repositories
             await using (var conn = GetConnection())
             {
                 var query = @"
-                    SELECT OrderID, ApplicationID, VehicleID, DriverID, OrderStartDate, OrderEndDate, OrderTime, Distination, KilometersCounterBeforeOrder, KilometersCounterAfterOrder
+                    SELECT OrderID, ApplicationID, VehicleID, DriverID, OrderStartDate, OrderEndDate, OrderStartTime, OrderEndTime Distination, KilometersCounterBeforeOrder, KilometersCounterAfterOrder
                     FROM joborders
                     WHERE OrderStartDate = @startDate";
 
@@ -298,7 +312,7 @@ namespace DataAccessLayer.Repositories
             await using (var conn = GetConnection())
             {
                 var query = @"
-                    SELECT OrderID, ApplicationID, VehicleID, DriverID, OrderStartDate, OrderEndDate, OrderTime, Distination, KilometersCounterBeforeOrder, KilometersCounterAfterOrder
+                    SELECT OrderID, ApplicationID, VehicleID, DriverID, OrderStartDate, OrderEndDate, OrderStartTime, OrderEndTime, Distination, KilometersCounterBeforeOrder, KilometersCounterAfterOrder
                     FROM joborders
                     WHERE Disitination = @destination";
 
@@ -335,8 +349,8 @@ namespace DataAccessLayer.Repositories
             await using (var conn = GetConnection())
             {
                 var query = @"
-                    INSERT INTO joborders (ApplicationID, VehicleID, DriverID, OrderStartDate, OrderEndDate, OrderTime, Distination, KilometersCounterBeforeOrder)
-                    VALUES (@applicationId, @vehicleId, @driverId, @orderStartDate, @orderEndDate, @orderTime, @destination, @odometerBefore)
+                    INSERT INTO joborders (ApplicationID, VehicleID, DriverID, OrderStartDate, OrderEndDate, OrderStartTime, OrderEndTime, Destination, KilometersCounterBeforeOrder)
+                    VALUES (@applicationId, @vehicleId, @driverId, @orderStartDate, @orderEndDate, @orderStartTime, @orderEndTime, @destination, @odometerBefore)
                     SELECT LAST_INSERT_ID();";
 
                 using (var cmd = GetCommand(query, conn))
@@ -346,7 +360,8 @@ namespace DataAccessLayer.Repositories
                     cmd.Parameters.AddWithValue("@driverId", jobOrder.DriverId);
                     cmd.Parameters.AddWithValue("@orderStartDate", jobOrder.StartDate);
                     cmd.Parameters.AddWithValue("@orderEndDate", jobOrder.EndDate);
-                    cmd.Parameters.AddWithValue("@orderTime", jobOrder.OrderTime);
+                    cmd.Parameters.AddWithValue("@orderStartTime", jobOrder.StartTime);
+                    cmd.Parameters.AddWithValue("@orderEndTime", jobOrder.EndTime);
                     cmd.Parameters.AddWithValue("@destination", jobOrder.Destination);
                     cmd.Parameters.AddWithValue("@odometerBefore", jobOrder.OdometerBefore);
 
@@ -377,7 +392,8 @@ namespace DataAccessLayer.Repositories
                         DriverID = @driverId,
                         OrderStartDate = @startDate,
                         OrderEndDate = @endDate,
-                        OrderTime = @orderTime,
+                        OrderStartTime = @orderStartTime,
+                        OrderEndTime = @orderEndTime,
                         Distination = @destination,
                         KilometersCounterBeforeOrder = @odometerBefore,
                         KilometersCounterAfterOrder = @odometerAfter
@@ -392,7 +408,8 @@ namespace DataAccessLayer.Repositories
                     cmd.Parameters.AddWithValue("@driverId", jobOrder.DriverId);
                     cmd.Parameters.AddWithValue("@orderStartDate", jobOrder.StartDate);
                     cmd.Parameters.AddWithValue("@orderEndDate", jobOrder.EndDate);
-                    cmd.Parameters.AddWithValue("@orderTime", jobOrder.OrderTime);
+                    cmd.Parameters.AddWithValue("@orderStartTime", jobOrder.StartTime);
+                    cmd.Parameters.AddWithValue("@orderEndTime", jobOrder.StartTime);
                     cmd.Parameters.AddWithValue("@destination", jobOrder.Destination);
                     cmd.Parameters.AddWithValue("@odometerBefore", jobOrder.OdometerBefore);
                     cmd.Parameters.AddWithValue("@odometerAfter", jobOrder.OdometerAfter);

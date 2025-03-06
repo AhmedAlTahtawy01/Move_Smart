@@ -3,34 +3,27 @@ using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace DataAccessLayer.Tests
+namespace ProjectTests.DataAccessLayerTests
 {
     public class UserDALTests
     {
 
         private readonly UserDAL _dal;
 
-        public UserDALTests()
-        {
-            _dal = new UserDAL();
-        }
-
-        private User ArrangeUser()
-        {
-            return new User(
-                0,
-                "12345678910123",
-                $"User_{Guid.NewGuid()}",
-                "Tester",
-                1
-            );
-        }
+        public UserDALTests() => _dal = new UserDAL();
 
         [Fact]
         public async Task CreateUserAsync_ShouldInsertUser()
         {
             // Arrange
-            var user = ArrangeUser();
+            var user = new UserDTO(
+                0,
+                "30310012614555",
+                "Ahmed.Super1310",
+                "Ahmed Hamdy",
+                enUserRole.SuperUser,
+                -1
+            );
 
             // Act
             var newUserId = await _dal.CreateUserAsync(user);
@@ -43,7 +36,14 @@ namespace DataAccessLayer.Tests
         public async Task GetUserByIdAsync_ShouldReturnCorrectUser()
         {
             // Arrange
-            var user = ArrangeUser();
+            var user = new UserDTO(
+                0,
+                "30310012614556",
+                "Abdo.Super1310",
+                "Abdo Mohamed",
+                enUserRole.SuperUser,
+                -1
+            );
             var newUserId = await _dal.CreateUserAsync(user);
 
             // Act
@@ -53,6 +53,7 @@ namespace DataAccessLayer.Tests
             retrievedUser.Should().NotBeNull();
             retrievedUser.UserId.Should().Be(newUserId);
             retrievedUser.NationalNo.Should().Be(user.NationalNo);
+            retrievedUser.Password.Should().Be(user.Password);
             retrievedUser.Name.Should().Be(user.Name);
             retrievedUser.Role.Should().Be(user.Role);
             retrievedUser.AccessRight.Should().Be(user.AccessRight);
@@ -62,12 +63,13 @@ namespace DataAccessLayer.Tests
         public async Task GetUserByNationalNoAsync_ShouldReturnCorrectUser()
         {
             // Arrange
-            var user = new User(
+            var user = new UserDTO(
                 0,
-                "12345678911123",
-                $"User_{Guid.NewGuid()}",
-                "Tester",
-                1
+                "30310012614557",
+                "Kamal.Super1310",
+                "Kamal Emad",
+                enUserRole.SuperUser,
+                -1
             );
             var newUserId = await _dal.CreateUserAsync(user);
 
@@ -78,6 +80,7 @@ namespace DataAccessLayer.Tests
             retrievedUser.Should().NotBeNull();
             retrievedUser.UserId.Should().Be(newUserId);
             retrievedUser.NationalNo.Should().Be(user.NationalNo);
+            retrievedUser.Password.Should().Be(user.Password);
             retrievedUser.Name.Should().Be(user.Name);
             retrievedUser.Role.Should().Be(user.Role);
             retrievedUser.AccessRight.Should().Be(user.AccessRight);
@@ -92,30 +95,32 @@ namespace DataAccessLayer.Tests
 
             // Assert
             users.Should().NotBeNull();
-            users.Should().BeOfType<List<User>>();
+            users.Should().BeOfType<List<UserDTO>>();
             users.Count.Should().BeGreaterThan(0);
         }
 
         [Fact]
         public async Task UpdateUserAsync_ShouldUpdateUserData()
         {
-            // Arrange
-            var user = ArrangeUser();
-            var newUserId = await _dal.CreateUserAsync(user);
-            var updatedUser = new User(
-                newUserId,
-                user.NationalNo,
-                $"Updated_{Guid.NewGuid()}",
-                "UpdatedTester",
-                2
+            
+            var userId = 3;
+            var updatedUser = new UserDTO(
+                3,
+                "40310012614556",
+                "AhmedAdel.Super1310",
+                "Ahmed Adel",
+                enUserRole.SuperUser,
+                -1
             );
 
             // Act
             var updateResult = await _dal.UpdateUserAsync(updatedUser);
-            var retrievedUser = await _dal.GetUserByIdAsync(newUserId);
+            var retrievedUser = await _dal.GetUserByIdAsync(userId);
 
             // Assert
             updateResult.Should().BeTrue();
+            retrievedUser.NationalNo.Should().Be(updatedUser.NationalNo);
+            retrievedUser.Password.Should().Be(updatedUser.Password);
             retrievedUser.Name.Should().Be(updatedUser.Name);
             retrievedUser.Role.Should().Be(updatedUser.Role);
             retrievedUser.AccessRight.Should().Be(updatedUser.AccessRight);
@@ -126,7 +131,14 @@ namespace DataAccessLayer.Tests
         public async Task DeleteUserAsync_ShouldRemoveUser()
         {
             // Arrange
-            var user = ArrangeUser();
+            var user = new UserDTO(
+                0,
+                "40310012614510",
+                "Adel.Super1310",
+                "Ahmed Adel",
+                enUserRole.SuperUser,
+                -1
+            );
             var newUserId = await _dal.CreateUserAsync(user);
 
             // Act

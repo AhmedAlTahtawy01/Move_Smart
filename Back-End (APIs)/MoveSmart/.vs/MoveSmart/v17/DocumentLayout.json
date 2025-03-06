@@ -1,14 +1,14 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "B:\\Graduation Project\\Back-End (APIs)\\MoveSmart\\",
+  "WorkspaceRootPath": "E:\\Graduation Project\\Back-End (APIs)\\MoveSmart\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A3725F1C-D40F-4EDC-AA70-937BEC9DDA1E}|DataAccessLayer.Tests\\DataAccessLayer.Tests.csproj|b:\\graduation project\\back-end (apis)\\movesmart\\dataaccesslayer.tests\\applicationdaltests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A3725F1C-D40F-4EDC-AA70-937BEC9DDA1E}|DataAccessLayer.Tests\\DataAccessLayer.Tests.csproj|solutionrelative:dataaccesslayer.tests\\applicationdaltests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A3725F1C-D40F-4EDC-AA70-937BEC9DDA1E}|DataAccessLayer.Tests\\ProjectTests.csproj|e:\\graduation project\\back-end (apis)\\movesmart\\dataaccesslayer.tests\\businesslayertests\\usertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A3725F1C-D40F-4EDC-AA70-937BEC9DDA1E}|DataAccessLayer.Tests\\ProjectTests.csproj|solutionrelative:dataaccesslayer.tests\\businesslayertests\\usertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7234CD12-0089-4EE3-9FA9-DB389DE583F6}|DataAccessLayer\\DataAccessLayer.csproj|b:\\graduation project\\back-end (apis)\\movesmart\\dataaccesslayer\\repositories\\applicationdal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7234CD12-0089-4EE3-9FA9-DB389DE583F6}|DataAccessLayer\\DataAccessLayer.csproj|solutionrelative:dataaccesslayer\\repositories\\applicationdal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4FC99AD1-27A5-49A3-A133-A7368F304B10}|BusinessLayer\\BusinessLayer.csproj|e:\\graduation project\\back-end (apis)\\movesmart\\businesslayer\\services\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4FC99AD1-27A5-49A3-A133-A7368F304B10}|BusinessLayer\\BusinessLayer.csproj|solutionrelative:businesslayer\\services\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -33,29 +33,33 @@
               "Name": "ST:0:0:{1c64b9c2-e352-428e-a56d-0ace190b99a6}"
             },
             {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "ApplicationDAL.cs",
-              "DocumentMoniker": "B:\\Graduation Project\\Back-End (APIs)\\MoveSmart\\DataAccessLayer\\Repositories\\ApplicationDAL.cs",
-              "RelativeDocumentMoniker": "DataAccessLayer\\Repositories\\ApplicationDAL.cs",
-              "ToolTip": "B:\\Graduation Project\\Back-End (APIs)\\MoveSmart\\DataAccessLayer\\Repositories\\ApplicationDAL.cs",
-              "RelativeToolTip": "DataAccessLayer\\Repositories\\ApplicationDAL.cs",
-              "ViewState": "AgIAACEAAAAAAAAAAAAiwMsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-23T20:50:28.983Z",
-              "EditorCaption": ""
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e1b7d1f8-9b3c-49b1-8f4f-bfc63a88835d}"
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "ApplicationDALTests.cs",
-              "DocumentMoniker": "B:\\Graduation Project\\Back-End (APIs)\\MoveSmart\\DataAccessLayer.Tests\\ApplicationDALTests.cs",
-              "RelativeDocumentMoniker": "DataAccessLayer.Tests\\ApplicationDALTests.cs",
-              "ToolTip": "B:\\Graduation Project\\Back-End (APIs)\\MoveSmart\\DataAccessLayer.Tests\\ApplicationDALTests.cs",
-              "RelativeToolTip": "DataAccessLayer.Tests\\ApplicationDALTests.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAIAAAAAAAAAA==",
+              "Title": "UserTests.cs",
+              "DocumentMoniker": "E:\\Graduation Project\\Back-End (APIs)\\MoveSmart\\DataAccessLayer.Tests\\BusinessLayerTests\\UserTests.cs",
+              "RelativeDocumentMoniker": "DataAccessLayer.Tests\\BusinessLayerTests\\UserTests.cs",
+              "ToolTip": "E:\\Graduation Project\\Back-End (APIs)\\MoveSmart\\DataAccessLayer.Tests\\BusinessLayerTests\\UserTests.cs",
+              "RelativeToolTip": "DataAccessLayer.Tests\\BusinessLayerTests\\UserTests.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-23T20:49:50.523Z",
+              "WhenOpened": "2025-03-05T23:25:08.95Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "User.cs",
+              "DocumentMoniker": "E:\\Graduation Project\\Back-End (APIs)\\MoveSmart\\BusinessLayer\\Services\\User.cs",
+              "RelativeDocumentMoniker": "BusinessLayer\\Services\\User.cs",
+              "ToolTip": "E:\\Graduation Project\\Back-End (APIs)\\MoveSmart\\BusinessLayer\\Services\\User.cs",
+              "RelativeToolTip": "BusinessLayer\\Services\\User.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAawAkAAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-05T20:33:44.305Z",
               "EditorCaption": ""
             }
           ]

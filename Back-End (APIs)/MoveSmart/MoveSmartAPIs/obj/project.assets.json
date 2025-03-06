@@ -1941,6 +1941,7 @@
           "Microsoft.Data.SqlClient": "6.0.1",
           "Microsoft.Extensions.Configuration": "9.0.2",
           "Microsoft.Extensions.Configuration.Json": "9.0.2",
+          "Microsoft.Extensions.Logging": "9.0.2",
           "MySql.Data": "9.2.0"
         },
         "compile": {
@@ -5868,23 +5869,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\mlkal\\.nuget\\packages\\": {},
+    "C:\\Users\\Ahmed Hamdy\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "B:\\Graduation Project\\Back-End (APIs)\\MoveSmart\\MoveSmartAPIs\\MoveSmartAPIs.csproj",
+      "projectUniqueName": "E:\\Graduation Project\\Back-End (APIs)\\MoveSmart\\MoveSmartAPIs\\MoveSmartAPIs.csproj",
       "projectName": "MoveSmartAPIs",
-      "projectPath": "B:\\Graduation Project\\Back-End (APIs)\\MoveSmart\\MoveSmartAPIs\\MoveSmartAPIs.csproj",
-      "packagesPath": "C:\\Users\\mlkal\\.nuget\\packages\\",
-      "outputPath": "B:\\Graduation Project\\Back-End (APIs)\\MoveSmart\\MoveSmartAPIs\\obj\\",
+      "projectPath": "E:\\Graduation Project\\Back-End (APIs)\\MoveSmart\\MoveSmartAPIs\\MoveSmartAPIs.csproj",
+      "packagesPath": "C:\\Users\\Ahmed Hamdy\\.nuget\\packages\\",
+      "outputPath": "E:\\Graduation Project\\Back-End (APIs)\\MoveSmart\\MoveSmartAPIs\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\mlkal\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Ahmed Hamdy\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -5899,8 +5900,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "B:\\Graduation Project\\Back-End (APIs)\\MoveSmart\\DataAccessLayer\\DataAccessLayer.csproj": {
-              "projectPath": "B:\\Graduation Project\\Back-End (APIs)\\MoveSmart\\DataAccessLayer\\DataAccessLayer.csproj"
+            "E:\\Graduation Project\\Back-End (APIs)\\MoveSmart\\DataAccessLayer\\DataAccessLayer.csproj": {
+              "projectPath": "E:\\Graduation Project\\Back-End (APIs)\\MoveSmart\\DataAccessLayer\\DataAccessLayer.csproj"
             }
           }
         }
@@ -5915,7 +5916,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.100"
+      "SdkAnalysisLevel": "9.0.200"
     },
     "frameworks": {
       "net8.0": {
@@ -5959,16 +5960,8 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problem reading the cache file B:\\Graduation Project\\Back-End (APIs)\\MoveSmart\\MoveSmartAPIs\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
-    }
-  ]
+  }
 }

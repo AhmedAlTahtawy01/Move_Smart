@@ -6,247 +6,256 @@ using MySql.Data.MySqlClient;
 using Microsoft.Extensions.Configuration;
 using System.IO;
 using System.Data.Common;
+using System.Security.Cryptography;
 
 namespace DataAccessLayer.Repositories
 {
-    public class User
+    public enum enUserRole
     {
+        SuperUser,
+        HospitalManager,
+        GeneralManager,
+        GeneralSupervisor,
+        PatrolsSupervisor,
+        WorkshopSupervisor,
+        AdministrativeSupervisor
+    }
+
+    public class UserDTO
+    {
+        //private enum _enPermissions
+        //{
+        //    All = -1,
+        //    None = 0,
+        //    AddConsumablesAndSpareParts = 1,
+        //    ReadConsumablesAndSpareParts = 2,
+        //    UpdateConsumablesAndSpareParts = 4,
+        //    DeleteConsumablesAndSpareParts = 8,
+        //    ReadAll = 16,
+        //    ApproveAllApplications = 32,
+        //    UpdateDrivers = 64,
+        //    UpdateVehicles = 128,
+        //    ManipulatePatrols = 256,
+        //    ManipulateJobOrder = 512,
+        //    ManipulateMaintenance = 1024,
+        //    ManipulateConsumablesPurchaseOrdersAndSparePartsPurchaseOrders = 2048,
+        //    ManipulateConsumablesWithdrawApplicationsAndSparePartsWithdrawApplications = 4096,
+        //    ManipulateMissions = 8192,
+        //}
+
         public int UserId { get; set; }
         public string NationalNo { get; set; }
+        public string Password { get; set; }
         public string Name { get; set; }
-        public string Role { get; set; }
+
+        public enUserRole Role { get; set; }
         public int AccessRight { get; set; }
 
-        public User(int userId, string nationalNo, string name, string role, int accessRight)
+        public UserDTO(int userId, string nationalNo, string password, string name, enUserRole role, int accessRight)
         {
-            this.UserId = userId;
-            this.NationalNo = nationalNo;
-            this.Name = name;
-            this.Role = role;
-            this.AccessRight = accessRight;
+            UserId = userId;
+            NationalNo = nationalNo;
+            Password = password;
+            Name = name;
+            Role = role;
+            AccessRight = accessRight;
         }
     }
 
     public class UserDAL
     {
-        private static readonly string _connectionString = "Server=localhost;Database=move_smart;User Id=root;Password=ahmedroot;";
+        private readonly string _connectionString;
 
-        private MySqlConnection GetConnection()
+        public UserDAL()
         {
-            return new MySqlConnection(_connectionString);
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json")
+                .Build();
+            _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
+
+        private MySqlConnection GetConnection() => new MySqlConnection(_connectionString);
 
         private MySqlCommand GetCommand(string query, MySqlConnection conn)
         {
-            var command = new MySqlCommand(query, conn);
-            command.CommandType = CommandType.Text;
+            using var command = new MySqlCommand(query, conn) { CommandType = CommandType.Text };
             return command;
         }
         
-        private User MapUser(DbDataReader reader)
+        private UserDTO MapUser(DbDataReader reader)
         {
-            return new User
+            if (!Enum.TryParse(reader["Role"].ToString(), out enUserRole role))
+                throw new Exception($"Invalid Role value: {reader["Role"]}");
+
+            return new UserDTO
             (
-                reader.GetInt32("UserID"),
-                reader.GetString("NationalNo"),
-                reader.GetString("Name"),
-                reader.GetString("Role"),
-                reader.GetInt32("AccessRight")
+                reader.GetInt32(reader.GetOrdinal("UserID")),
+                reader.GetString(reader.GetOrdinal("NationalNo")),
+                reader.GetString(reader.GetOrdinal("Password")),
+                reader.GetString(reader.GetOrdinal("Name")),
+                role,
+                reader.GetInt32(reader.GetOrdinal("AccessRight"))
             );
         }
 
-        public async Task<List<User>> GetAllUsersAsync()
+        private string _HashPassword(string password)
         {
-            var usersList = new List<User>();
+            using var sha265 = SHA256.Create();
+            var bytes = sha265.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+            return Convert.ToBase64String(bytes);
+        }
 
-            await using (var conn = GetConnection())
+        public async Task<List<UserDTO>> GetAllUsersAsync()
+        {
+            var usersList = new List<UserDTO>();
+
+            await using var conn = GetConnection();
+            const string query = "SELECT UserID, NationalNo, Password, Name, Role, AccessRight FROM users";
+
+            using var cmd = GetCommand(query, conn);
+            try
             {
-                var query = "SELECT UserID, NationalNo, Name, Role, AccessRight FROM users";
-
-                using (var cmd = GetCommand(query, conn))
-                {
-                    try
-                    {
-                        await conn.OpenAsync().ConfigureAwait(false);
-
-                        using (var reader = await cmd.ExecuteReaderAsync().ConfigureAwait(false))
-                        {
-                            while (await reader.ReadAsync())
-                            {
-                                usersList.Add(MapUser(reader));
-                            }
-                        }
-                    }
-                    catch (MySqlException ex)
-                    {
-                        throw new Exception("Databse error occurred in GetAllUsersAsync.", ex);
-                    }
-                }
-
+                await conn.OpenAsync().ConfigureAwait(false);
+                using var reader = await cmd.ExecuteReaderAsync().ConfigureAwait(false);
+                while (await reader.ReadAsync()) usersList.Add(MapUser(reader));
+            }
+            catch (MySqlException ex)
+            {
+                throw new Exception("Database error occurred in GetAllUsersAsync.", ex);
             }
 
             return usersList;
-
         }
 
-        public async Task<User> GetUserByIdAsync(int userId)
+        public async Task<UserDTO> GetUserByIdAsync(int userId)
         {
-            await using (var conn = GetConnection())
+            await using var conn = GetConnection();
+            const string query = "SELECT UserID, NationalNo, Password, Name, Role, AccessRight FROM users WHERE UserID = @userId";
+
+            using var cmd = GetCommand(query, conn);
+            cmd.Parameters.AddWithValue("@userId", userId);
+
+            try
             {
-                var query = "SELECT UserID, NationalNo, Name, Role, AccessRight FROM users WHERE UserID = @userId";
-
-                using (var command = GetCommand(query, conn))
-                {
-                    command.Parameters.Add("@userId", MySqlDbType.Int32).Value = userId;
-
-                    try
-                    {
-                        await conn.OpenAsync().ConfigureAwait(false);
-                        using (var reader = await command.ExecuteReaderAsync().ConfigureAwait(false))
-                        {
-                            if (await reader.ReadAsync())
-                            {
-                                return MapUser(reader);
-                            }
-                            else
-                            {
-                                return null;
-                            }
-                        }
-                    }
-                    catch (MySqlException ex)
-                    {
-                        throw new Exception("Database error occurred in GetUserByIdAsync.", ex);
-                    }
-                }
+                await conn.OpenAsync().ConfigureAwait(false);
+                using var reader = await cmd.ExecuteReaderAsync().ConfigureAwait(false);
+                return await reader.ReadAsync() ? MapUser(reader) : null;
+            }
+            catch (MySqlException ex)
+            {
+                throw new Exception("Database error occurred in GetUserByIdAsync.", ex);
             }
         }
 
-        public async Task<User> GetUserByNationalNoAsync(string nationalNo)
+        public async Task<UserDTO> GetUserByNationalNoAsync(string nationalNo)
         {
-            await using (var conn = GetConnection())
+            await using var conn = GetConnection();
+            const string query = "SELECT UserID, NationalNo, Password, Name, Role, AccessRight FROM users WHERE NationalNo = @nationalNo";
+
+            using var cmd = GetCommand(query, conn);
+            cmd.Parameters.AddWithValue("@nationalNo", nationalNo);
+
+            try
             {
-                var query = "SELECT UserID, NationalNo, Name, Role, AccessRight FROM users WHERE NationalNo = @nationalNo";
-
-                using (var command = GetCommand(query, conn))
-                {
-                    command.Parameters.Add("@nationalNo", MySqlDbType.VarChar).Value = nationalNo;
-
-                    try
-                    {
-                        await conn.OpenAsync().ConfigureAwait(false);
-                        using (var reader = await command.ExecuteReaderAsync().ConfigureAwait(false))
-                        {
-                            if (await reader.ReadAsync())
-                            {
-                                return MapUser(reader);
-                            }
-                            else
-                            {
-                                return null;
-                            }
-                        }
-                    }
-                    catch (MySqlException ex)
-                    {
-                        throw new Exception("Database error occurred in GetUserByNationalNoAsync.", ex);
-                    }
-                }
+                await conn.OpenAsync().ConfigureAwait(false);
+                using var reader = await cmd.ExecuteReaderAsync().ConfigureAwait(false);
+                return await reader.ReadAsync() ? MapUser(reader) : null;
+            }
+            catch (MySqlException ex)
+            {
+                throw new Exception("Database error occurred in GetUserByNationalNoAsync.", ex);
             }
         }
 
-        public async Task<int> CreateUserAsync(User user)
+        public async Task<bool> NationalNoExistsAsync(string nationalNo)
         {
-            await using (var conn = GetConnection())
+            await using var conn = GetConnection();
+            const string query = "SELECT COUNT(*) FROM users WHERE NationalNo = @nationalNo";
+
+            using var cmd = GetCommand(query, conn);
+            cmd.Parameters.AddWithValue("@nationalNo", nationalNo);
+
+            try
             {
-
-                var query = @"
-                    INSERT INTO users (NationalNo, Name, Role, AccessRight) 
-                    VALUES (@NationalNo, @Name, @Role, @AccessRight);
-                    SELECT LAST_INSERT_ID();";
-
-                using (var command = GetCommand(query, conn))
-                {
-                    command.Parameters.Add("@NationalNo", MySqlDbType.VarChar).Value = user.NationalNo;
-                    command.Parameters.Add("@Name", MySqlDbType.VarChar).Value = user.Name;
-                    command.Parameters.Add("@Role", MySqlDbType.VarChar).Value = user.Role;
-                    command.Parameters.Add("@AccessRight", MySqlDbType.Int64).Value = user.AccessRight;
-
-                    try
-                    {
-
-                        await conn.OpenAsync().ConfigureAwait(false);
-                        var newUserId = Convert.ToInt32(await command.ExecuteScalarAsync().ConfigureAwait(false));
-
-                        return newUserId;
-                    }
-                    catch (MySqlException ex)
-                    {
-                        throw new Exception("Database error occurred in CreateUserAsync.", ex);
-                    }
-                }
+                await conn.OpenAsync().ConfigureAwait(false);
+                return Convert.ToInt32(await cmd.ExecuteScalarAsync().ConfigureAwait(false)) > 0;
+            }
+            catch (MySqlException ex)
+            {
+                throw new Exception("Database error occurred in UserExistsAsync.", ex);
             }
         }
 
-        public async Task<bool> UpdateUserAsync(User user)
+        public async Task<int> CreateUserAsync(UserDTO user)
         {
-            await using (var conn = GetConnection())
+            await using var conn = GetConnection();
+            const string query = @"
+                INSERT INTO users (NationalNo, Password, Name, Role, AccessRight)
+                VALUES (@NationalNo, @Password, @Name, @Role, @AccessRight);
+                SELECT LAST_INSERT_ID();";
+
+            using var cmd = GetCommand(query, conn);
+            cmd.Parameters.AddWithValue("@NationalNo", user.NationalNo);
+            cmd.Parameters.AddWithValue("@Password", _HashPassword(user.Password));
+            cmd.Parameters.AddWithValue("@Name", user.Name);
+            cmd.Parameters.AddWithValue("@Role", user.Role.ToString());
+            cmd.Parameters.AddWithValue("@AccessRight", user.AccessRight);
+
+            try
             {
-                var query = @"
-                    UPDATE users 
-                    SET 
-                        NationalNo = @NationalNo, 
-                        Name = @Name, 
-                        Role = @Role, 
-                        AccessRight = @AccessRight 
-                    WHERE 
-                        UserID = @UserID;";
+                await conn.OpenAsync().ConfigureAwait(false);
+                return Convert.ToInt32(await cmd.ExecuteScalarAsync().ConfigureAwait(false));
+            }
+            catch (MySqlException ex)
+            {
+                throw new Exception("Database error occurred in CreateUserAsync.", ex);
+            }
+        }
 
-                using (var command = GetCommand(query, conn))
-                {
-                    command.Parameters.Add("@NationalNo", MySqlDbType.VarChar).Value = user.NationalNo;
-                    command.Parameters.Add("@Name", MySqlDbType.VarChar).Value = user.Name;
-                    command.Parameters.Add("@Role", MySqlDbType.VarChar).Value = user.Role;
-                    command.Parameters.Add("@AccessRight", MySqlDbType.Int32).Value = user.AccessRight;
-                    command.Parameters.Add("@UserID", MySqlDbType.Int32).Value = user.UserId;
+        public async Task<bool> UpdateUserAsync(UserDTO user)
+        {
+            await using var conn = GetConnection();
+            const string query = @"
+                UPDATE users
+                SET NationalNo = @NationalNo, Password = @Password, Name = @Name, Role = @Role, AccessRight = @AccessRight
+                WHERE UserID = @UserID";
 
-                    try
-                    {
+            using var cmd = GetCommand(query, conn);
+            cmd.Parameters.AddWithValue("@UserID", user.UserId);
+            cmd.Parameters.AddWithValue("@NationalNo", user.NationalNo);
+            cmd.Parameters.AddWithValue("@Password", _HashPassword(user.Password));
+            cmd.Parameters.AddWithValue("@Name", user.Name);
+            cmd.Parameters.AddWithValue("@Role", user.Role.ToString());
+            cmd.Parameters.AddWithValue("@AccessRight", user.AccessRight);
 
-                        await conn.OpenAsync().ConfigureAwait(false);
-                        var rowsAffected = await command.ExecuteNonQueryAsync().ConfigureAwait(false);
-
-                        return rowsAffected > 0;
-                    }
-                    catch (MySqlException ex)
-                    {
-                        throw new Exception("Database error occurred in UpdateUserAsync.", ex);
-                    }
-                }
+            try
+            {
+                await conn.OpenAsync().ConfigureAwait(false);
+                return await cmd.ExecuteNonQueryAsync().ConfigureAwait(false) > 0;                
+            }
+            catch (MySqlException ex)
+            {
+                throw new Exception("Database error occurred in UpdateUserAsync.", ex);
             }
         }
 
         public async Task<bool> DeleteUserAsync(int userId)
         {
-            await using (var conn = GetConnection())
-            {
-                var query = "DELETE FROM users WHERE UserID = @UserId";
-                using (var command = GetCommand(query, conn))
-                {
-                    command.Parameters.Add("@UserId", MySqlDbType.Int32).Value = userId;
-                        
-                    try
-                    {
-                        await conn.OpenAsync().ConfigureAwait(false);
-                        var rowsAffected = await command.ExecuteNonQueryAsync().ConfigureAwait(false);
+            await using var conn = GetConnection();
+            const string query = "DELETE FROM users WHERE UserID = @UserID";
 
-                        return rowsAffected > 0;
-                    }
-                    catch (MySqlException ex)
-                    {
-                        throw new Exception("Database error occurred in DeleteUserAsync.", ex);
-                    }
-                }
+            using var cmd = GetCommand(query, conn);
+            cmd.Parameters.AddWithValue("@UserID", userId);
+
+            try
+            {
+                await conn.OpenAsync().ConfigureAwait(false);
+                return await cmd.ExecuteNonQueryAsync().ConfigureAwait(false) > 0;
+            }
+            catch (MySqlException ex)
+            {
+                throw new Exception("Database error occurred in DeleteUserAsync.", ex);
             }
         }
     }

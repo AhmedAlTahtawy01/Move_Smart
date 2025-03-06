@@ -16,20 +16,18 @@ namespace DataAccessLayer.Repositories
         public int MissionVehiclesId { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public TimeSpan MissionTime { get; set; }
         public string Destination { get; set; }
-        public int CreatedByUser { get; set; }
+        public int UserId { get; set; }
 
-        public Mission(int missionId, int missionNoteId, int missionVechiclesId, DateTime startDate, DateTime endDate, TimeSpan missionTime, string destination, int createdByUser)
+        public Mission(int missionId, int missionNoteId, int missionVechiclesId, DateTime startDate, DateTime endDate, string destination, int createdByUser)
         {
             this.MissionId = missionId;
             this.MissionNoteId = missionNoteId;
             this.MissionVehiclesId = missionVechiclesId;
             this.StartDate = startDate;
             this.EndDate = endDate;
-            this.MissionTime = missionTime;
             this.Destination = destination;
-            this.CreatedByUser = createdByUser;
+            this.UserId = createdByUser;
         }
     }
 
@@ -58,7 +56,6 @@ namespace DataAccessLayer.Repositories
                 reader.GetInt32("MissionVehiclesID"),
                 reader.GetDateTime("MissionStartDate"),
                 reader.GetDateTime("MissionEndDate"),
-                TimeSpan.TryParse(reader["MissionTime"]?.ToString(), out TimeSpan orderTime) ? orderTime : TimeSpan.Zero,
                 reader.GetString("DIstination"),
                 reader.GetInt32("CreatedByUser")
             );
@@ -71,7 +68,7 @@ namespace DataAccessLayer.Repositories
             await using (var conn = GetConnection())
             {
                 var query = @"
-                    SELECT MissionID, MissionNoteID, MissionVehiclesID, MissionStartDate, MissionEndDate, MissionTime, DIstination, CreatedByUser
+                    SELECT MissionID, MissionNoteID, MissionVehiclesID, MissionStartDate, MissionEndDate, DIstination, CreatedByUser
                     FROM missions";
 
                 using (var cmd = GetCommand(query, conn))
@@ -103,7 +100,7 @@ namespace DataAccessLayer.Repositories
             await using (var conn = GetConnection())
             {
                 var query = @"
-                    SELECT MissionID, MissionNoteID, MissionVehiclesID, MissionStartDate, MissionEndDate, MissionTime, DIstination, CreatedByUser
+                    SELECT MissionID, MissionNoteID, MissionVehiclesID, MissionStartDate, MissionEndDate, DIstination, CreatedByUser
                     FROM missions
                     WHERE MissionID = @missionId";
 
@@ -141,7 +138,7 @@ namespace DataAccessLayer.Repositories
             await using (var conn = GetConnection())
             {
                 var query = @"
-                    SELECT MissionID, MissionNoteID, MissionVehiclesID, MissionStartDate, MissionEndDate, MissionTime, DIstination, CreatedByUser
+                    SELECT MissionID, MissionNoteID, MissionVehiclesID, MissionStartDate, MissionEndDate, DIstination, CreatedByUser
                     FROM missions
                     WHERE MissionNoteID = @missionNoteId";
 
@@ -177,7 +174,7 @@ namespace DataAccessLayer.Repositories
             await using (var conn = GetConnection())
             {
                 var query = @"
-                    SELECT MissionID, MissionNoteID, MissionVehiclesID, MissionStartDate, MissionEndDate, MissionTime, DIstination, CreatedByUser
+                    SELECT MissionID, MissionNoteID, MissionVehiclesID, MissionStartDate, MissionEndDate, DIstination, CreatedByUser
                     FROM missions
                     WHERE MissionVehiclesID = @missionVehiclesId";
 
@@ -213,7 +210,7 @@ namespace DataAccessLayer.Repositories
             await using (var conn = GetConnection())
             {
                 var query = @"
-                    SELECT MissionID, MissionNoteID, MissionVehiclesID, MissionStartDate, MissionEndDate, MissionTime, DIstination, CreatedByUser
+                    SELECT MissionID, MissionNoteID, MissionVehiclesID, MissionStartDate, MissionEndDate, DIstination, CreatedByUser
                     FROM missions
                     WHERE MissionStartDate = @startDate";
 
@@ -249,7 +246,7 @@ namespace DataAccessLayer.Repositories
             await using (var conn = GetConnection())
             {
                 var query = @"
-                    SELECT MissionID, MissionNoteID, MissionVehiclesID, MissionStartDate, MissionEndDate, MissionTime, DIstination, CreatedByUser
+                    SELECT MissionID, MissionNoteID, MissionVehiclesID, MissionStartDate, MissionEndDate, DIstination, CreatedByUser
                     FROM missions
                     WHERE DIstination = @destination";
 
@@ -278,14 +275,14 @@ namespace DataAccessLayer.Repositories
             return missions;
         }
 
-        public async Task<List<Mission>> GetMissionsByCreatedByUserAsync(int userId)
+        public async Task<List<Mission>> GetMissionsByUserIdAsync(int userId)
         {
             var missions = new List<Mission>();
 
             await using (var conn = GetConnection())
             {
                 var query = @"
-                    SELECT MissionID, MissionNoteID, MissionVehiclesID, MissionStartDate, MissionEndDate, MissionTime, DIstination, CreatedByUser
+                    SELECT MissionID, MissionNoteID, MissionVehiclesID, MissionStartDate, MissionEndDate, DIstination, CreatedByUser
                     FROM missions
                     WHERE CreatedByUser = @userId";
 
@@ -306,7 +303,7 @@ namespace DataAccessLayer.Repositories
                     }
                     catch (MySqlException ex)
                     {
-                        throw new Exception("Database error occurred in GetMissionsByCreatedByUserAsync.", ex);
+                        throw new Exception("Database error occurred in GetMissionsByUserIdAsync.", ex);
                     }
                 }
             }
@@ -319,8 +316,8 @@ namespace DataAccessLayer.Repositories
             await using (var conn = GetConnection())
             {
                 var query = @"
-                    INSERT INTO missions (MissionNoteID, MissionVehiclesID, MissionStartDate, MissionEndDate, MissionTime, DIstination, CreatedByUser)
-                    VALUES (@missionNoteId, @missionVehiclesId, @missionStartDate, @missionEndDate, @missionTime, @destination, @createdByUser)
+                    INSERT INTO missions (MissionNoteID, MissionVehiclesID, MissionStartDate, MissionEndDate, DIstination, CreatedByUser)
+                    VALUES (@missionNoteId, @missionVehiclesId, @missionStartDate, @missionEndDate, @destination, @createdByUser)
                     SELECT LAST_INSERT_ID();";
 
                 using (var cmd = GetCommand(query, conn))
@@ -329,9 +326,8 @@ namespace DataAccessLayer.Repositories
                     cmd.Parameters.AddWithValue("@missionVehiclesId", mission.MissionVehiclesId);
                     cmd.Parameters.AddWithValue("@missionStartDate", mission.StartDate);
                     cmd.Parameters.AddWithValue("@missionEndDate", mission.EndDate);
-                    cmd.Parameters.AddWithValue("@missionTime", mission.MissionTime);
                     cmd.Parameters.AddWithValue("@destination", mission.Destination);
-                    cmd.Parameters.AddWithValue("@createdByUser", mission.CreatedByUser);
+                    cmd.Parameters.AddWithValue("@createdByUser", mission.UserId);
 
                     try
                     {
@@ -359,7 +355,6 @@ namespace DataAccessLayer.Repositories
                         MissionVehiclesID = @missionVehiclesId,
                         MissionStartDate = @startDate,
                         MissionEndDate = @endDate,
-                        MissionTime = @missionTime,
                         DIstination = @destination,
                         CreatedByUser = @createdByUser
                     WHERE
@@ -372,9 +367,8 @@ namespace DataAccessLayer.Repositories
                     cmd.Parameters.AddWithValue("@missionVehiclesId", mission.MissionVehiclesId);
                     cmd.Parameters.AddWithValue("@startDate", mission.StartDate);
                     cmd.Parameters.AddWithValue("@endDate", mission.EndDate);
-                    cmd.Parameters.AddWithValue("@missionTime", mission.MissionTime);
                     cmd.Parameters.AddWithValue("@destination", mission.Destination);
-                    cmd.Parameters.AddWithValue("@createdByUser", mission.CreatedByUser);
+                    cmd.Parameters.AddWithValue("@createdByUser", mission.UserId);
 
                     try
                     {

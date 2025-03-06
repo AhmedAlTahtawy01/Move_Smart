@@ -6,32 +6,43 @@ using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace DataAccessLayer.Repositories
 {
+
+    public enum enStatus
+    {
+        Confirmed,
+        Rejected,
+        Pending,
+        Canceled
+    }
+
     public class Application
     {
+
         public int ApplicationId { get; set; }
-        public DateTime CreationTime { get; set; }
-        public int Status { get; set; }
+        public DateTime CreationDate { get; set; }
+        public enStatus Status { get; set; }
         public int ApplicationType { get; set; }
         public string ApplicationDescription { get; set; }
-        public int CreatedByUser { get; set; }
+        public int UserId { get; set; }
 
-        public Application(int applicationId, DateTime creationTime, int status, int applicationType, string applicationDescription, int createdByUser)
+        public Application(int applicationId, DateTime creationDate, enStatus status, int applicationType, string applicationDescription, int createdByUser)
         {
             this.ApplicationId = applicationId;
-            this.CreationTime = creationTime;
+            this.CreationDate = creationDate;
             this.Status = status;
             this.ApplicationType = applicationType;
             this.ApplicationDescription = applicationDescription;
-            this.CreatedByUser = createdByUser;
+            this.UserId = createdByUser;
         }
     }
 
     public class ApplicationDAL
     {
-        private static readonly string _connectionString = "Server=localhost;Database=MoveSmart;User Id=root;Password=ahmedroot;";
+        private static readonly string _connectionString = "Server=localhost;Database=move_smart;User Id=root;Password=ahmedroot;";
 
         private MySqlConnection GetConnection()
         {
@@ -47,14 +58,17 @@ namespace DataAccessLayer.Repositories
 
         private Application MapApplication(DbDataReader reader)
         {
+            enStatus status;
+            Enum.TryParse(reader.GetString(reader.GetOrdinal("Status")), out status);
+
             return new Application
             (
                 reader.GetInt32("ApplicationID"),
                 reader.GetDateTime("CreationDate"),
-                reader.GetInt32("Status"),
+                status,
                 reader.GetInt32("ApplicationType"),
                 reader.GetString("ApplicationDescription"),
-                reader.GetInt32("CreatedByUser")
+                reader.GetInt32("CreatedByUserID")
             );
         }
 
@@ -65,7 +79,7 @@ namespace DataAccessLayer.Repositories
             await using (var conn = GetConnection())
             {
                 var query = @"
-                            SELECT ApplicationID, CreationDate, Status, ApplicationType, ApplicationDescription, CreatedByUser
+                            SELECT ApplicationID, CreationDate, Status, ApplicationType, ApplicationDescription, CreatedByUserID
                             FROM applications";
 
                 using (var cmd = GetCommand(query, conn))
@@ -97,7 +111,7 @@ namespace DataAccessLayer.Repositories
             await using (var conn = GetConnection())
             {
                 var query = @"
-                            SELECT ApplicationID, CreationDate, Status, ApplicationType, ApplicationDescription, CreatedByUser
+                            SELECT ApplicationID, CreationDate, Status, ApplicationType, ApplicationDescription, CreatedByUserID
                             FROM applications
                             WHERE ApplicationID = @applicationId";
 
@@ -135,7 +149,7 @@ namespace DataAccessLayer.Repositories
             await using (var conn = GetConnection())
             {
                 var query = @"
-                            SELECT ApplicationID, CreationDate, Status, ApplicationType, ApplicationDescription, CreatedByUser
+                            SELECT ApplicationID, CreationDate, Status, ApplicationType, ApplicationDescription, CreatedByUserID
                             FROM applications 
                             WHERE ApplicationType = @applicationType";
 
@@ -165,16 +179,16 @@ namespace DataAccessLayer.Repositories
             return applicationsList;
         }
 
-        public async Task<List<Application>> GetApplicationsByCreatedByUserAsync(int createdByUser)
+        public async Task<List<Application>> GetApplicationsByUserIdAsync(int createdByUser)
         {
             var applicationsList = new List<Application>();
 
             await using (var conn = GetConnection())
             {
                 var query = @"
-                            SELECT ApplicationID, CreationDate, Status, ApplicationType, ApplicationDescription, CreatedByUser
+                            SELECT ApplicationID, CreationDate, Status, ApplicationType, ApplicationDescription, CreatedByUserID
                             FROM applications 
-                            WHERE CreatedByUser = @createdByUser";
+                            WHERE CreatedByUserID = @createdByUser";
 
                 using (var cmd = GetCommand(query, conn))
                 {
@@ -194,7 +208,7 @@ namespace DataAccessLayer.Repositories
                     }
                     catch (MySqlException ex)
                     {
-                        throw new Exception("Databse error occurred in GetApplicationsByCreatedByUserAsync.", ex);
+                        throw new Exception("Database error occurred in GetApplicationsByUserIdAsync.", ex);
                     }
                 }
             }
@@ -202,22 +216,158 @@ namespace DataAccessLayer.Repositories
             return applicationsList;
         }
 
+        public async Task<List<Application>> GetApplicationsByStatus(enStatus status)
+        {
+            var applicationsList = new List<Application>();
+
+            await using (var conn = GetConnection())
+            {
+                var query = @"
+                            SELECT ApplicationID, CreationDate, Status, ApplicationType, ApplicationDescription, CreatedByUserID
+                            FROM applications 
+                            WHERE Status = @status";
+
+                using (var cmd = GetCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@status", status.ToString());
+
+                    try
+                    {
+                        await conn.OpenAsync().ConfigureAwait(false);
+
+                        using (var reader = await cmd.ExecuteReaderAsync().ConfigureAwait(false))
+                        {
+                            while (await reader.ReadAsync())
+                            {
+                                applicationsList.Add(MapApplication(reader));
+                            }
+                        }
+                    }
+                    catch (MySqlException ex)
+                    {
+                        throw new Exception("Database error occurred in GetApplicationsByStatus.", ex);
+                    }
+                }
+
+            }
+
+            return applicationsList;
+        }
+
+        public async Task<int> CountAllApplicationsAsync()
+        {
+            await using (var conn = GetConnection())
+            {
+                var query = "SELECT COUNT(*) FROM applications";
+
+                using (var cmd = GetCommand(query, conn))
+                {
+                    try
+                    {
+                        await conn.OpenAsync().ConfigureAwait(false);
+                        return Convert.ToInt32(await cmd.ExecuteScalarAsync().ConfigureAwait(false));
+                    }
+                    catch (MySqlException ex)
+                    {
+                        throw new Exception("Database error occurred in CountAllApplicationsAsync.", ex);
+                    }
+                }
+            }
+        }
+
+        public async Task<int> CountApplicationsByStatusAsync(enStatus status)
+        {
+            await using (var conn = GetConnection())
+            {
+                var query = "SELECT COUNT(*) FROM applications WHERE Status = @status";
+
+                using (var cmd = GetCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@status", status.ToString());
+
+                    try
+                    {
+                        await conn.OpenAsync().ConfigureAwait(false);
+                        return Convert.ToInt32(await cmd.ExecuteScalarAsync().ConfigureAwait(false));
+                    }
+                    catch (MySqlException ex)
+                    {
+                        throw new Exception("Database error occurred in CountApplicationsByStatusAsync.", ex);
+                    }
+                }
+            }
+        }
+
+        public async Task<int> CountApplicationsByTypeAsync(int applicationType)
+        {
+            await using (var conn = GetConnection())
+            {
+                var query = "SELECT COUNT(*) FROM applications WHERE ApplicationType = @applicationType";
+
+                using (var cmd = GetCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@applicationType", applicationType);
+
+                    try
+                    {
+                        await conn.OpenAsync().ConfigureAwait(false);
+                        return Convert.ToInt32(await cmd.ExecuteScalarAsync().ConfigureAwait(false));
+                    }
+                    catch (MySqlException ex)
+                    {
+                        throw new Exception("Database error occurred in CountApplicationsByTypeAsync.", ex);
+                    }
+                }
+            }
+        }
+
+        public async Task<bool> UpdateStatusAsync(int applicationId, enStatus status)
+        {
+            await using (var conn = GetConnection())
+            {
+                var query = @"
+                    UPDATE applications
+                    SET 
+                        Status = @status
+                    WHERE
+                        ApplicationID = @applicationId";
+
+                using (var cmd = GetCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@applicationId", applicationId);
+                    cmd.Parameters.Add("@status", MySqlDbType.Enum).Value = status.ToString();
+
+                    try
+                    {
+                        await conn.OpenAsync().ConfigureAwait(false);
+                        var rowsAffected = await cmd.ExecuteNonQueryAsync().ConfigureAwait(false);
+
+                        return rowsAffected > 0;
+                    }
+                    catch (MySqlException ex)
+                    {
+                        throw new Exception("Database error occurred in UpdateStatusAsync.", ex);
+                    }
+                }
+            }
+        }
+
         public async Task<int> CreateApplicationAsync(Application application)
         {
             await using (var conn = GetConnection())
             {
                 var query = @"
-                    INSERT INTO applications (CreationDate, Status, ApplicationType, ApplicationDescription, CreatedByUser) 
-                    VALUES (@creationDate, @status, @applicationType, @applicationDescription, @createdByUser)
-                    SELECT LAST_INSERT_ID();";
+                    INSERT INTO applications (CreationDate, Status, ApplicationType, ApplicationDescription, CreatedByUserID) 
+                    VALUES (@creationDate, @status, @applicationType, @applicationDescription, @createdByUser);
+                    SELECT LAST_INSERT_ID()";
 
                 using (var cmd = GetCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("@creationDate", application.CreationTime);
-                    cmd.Parameters.AddWithValue("@status", application.Status);
+                    cmd.Parameters.AddWithValue("@creationDate", application.CreationDate);
+                    cmd.Parameters.AddWithValue("@status", enStatus.Pending.ToString());
                     cmd.Parameters.AddWithValue("@applicationType", application.ApplicationType);
                     cmd.Parameters.AddWithValue("@applicationDescription", application.ApplicationDescription);
-                    cmd.Parameters.AddWithValue("@createdByUser", application.CreatedByUser);
+                    cmd.Parameters.AddWithValue("@createdByUser", application.UserId);
 
                     try
                     {
@@ -228,7 +378,7 @@ namespace DataAccessLayer.Repositories
                     }
                     catch (MySqlException ex)
                     {
-                        throw new Exception("Databse error occurred in CreateApplicationAsync.", ex);
+                        throw new Exception("Database error occurred in CreateApplicationAsync.", ex);
                     }
                 }
             }
@@ -241,21 +391,19 @@ namespace DataAccessLayer.Repositories
                 var query = @"
                     UPDATE applications
                     SET 
-                        CreationDate = @creationDate,
                         Status = @status,
                         ApplicationType = @applicationType,
                         ApplicationDescription = @applicationDescription,
-                        CreatedByUser = @createdByUser
+                        CreatedByUserID = @createdByUser
                     WHERE
                         ApplicationID = @applicationId";
 
                 using (var cmd = GetCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("@creationDate", application.CreationTime);
-                    cmd.Parameters.AddWithValue("@status", application.Status);
+                    cmd.Parameters.AddWithValue("@status", application.Status.ToString());
                     cmd.Parameters.AddWithValue("@applicationType", application.ApplicationType);
                     cmd.Parameters.AddWithValue("@applicationDescription", application.ApplicationDescription);
-                    cmd.Parameters.AddWithValue("@createdByUser", application.CreatedByUser);
+                    cmd.Parameters.AddWithValue("@createdByUser", application.UserId);
                     cmd.Parameters.AddWithValue("@applicationId", application.ApplicationId);
 
                     try

@@ -1,34 +1,29 @@
 using DataAccessLayer.Repositories;
 using FluentAssertions;
+using System;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace DataAccessLayer.Tests
+namespace ProjectTests.DataAccessLayerTests
 {
     public class ApplicationTypeDALTests
     {
 
-        private readonly ApplicationTypeDAL _applicationTypeDAL;
+        private readonly ApplicationTypeDAL _dal;
 
-        public ApplicationTypeDALTests()
-        {
-            _applicationTypeDAL = new ApplicationTypeDAL();
-        }
+        public ApplicationTypeDALTests() => _dal = new ApplicationTypeDAL();
 
         [Fact]
         public async Task CreateApplicationTypeAsync_ShouldInsertData()
         {
             // Arrange
-            string typeName = "TestType";
+            string typeName = "Purchase order";
 
             // Act
-            int newId = await _applicationTypeDAL.CreateApplicationTypeAsync(typeName);
+            int newId = await _dal.CreateApplicationTypeAsync(typeName);
 
             // Assert
             newId.Should().BeGreaterThan(0);
-
-            // Clean up (Delete the test data)
-            await _applicationTypeDAL.DeleteApplicationTypeAsync(newId);
         }
 
         [Fact]
@@ -36,10 +31,10 @@ namespace DataAccessLayer.Tests
         {
             // Arrange
             var typeName = "Release permission";
-            var newId = await _applicationTypeDAL.CreateApplicationTypeAsync(typeName);
+            var newId = await _dal.CreateApplicationTypeAsync(typeName);
 
             // Act
-            var result = await _applicationTypeDAL.GetApplicationTypeByIdAsync(newId);
+            var result = await _dal.GetApplicationTypeByIdAsync(newId);
 
             // Assert
             result.Should().NotBeNull();
@@ -51,25 +46,25 @@ namespace DataAccessLayer.Tests
         public async Task GetAllApplicationTypesAsync_ShouldReturnData()
         {
             // Act
-            var result = await _applicationTypeDAL.GetAllApplicationTypesAsync();
+            var result = await _dal.GetAllApplicationTypesAsync();
 
             // Assert
             result.Should().NotBeNull();
-            result.Should().BeOfType<List<ApplicationType>>();
+            result.Should().BeOfType<List<ApplicationTypeDTO>>();
             result.Count.Should().BeGreaterThan(0);
         }
 
         [Fact]
         public async Task UpdateApplicationTypeAsync_ShouldUpdateDate()
         {
-            var typeName = "Release Order";
-            var newId = await _applicationTypeDAL.CreateApplicationTypeAsync(typeName);
+            var typeName = "Purchase Order";
+            var newId = await _dal.CreateApplicationTypeAsync(typeName);
 
-            var updatedTypeName = "Purchase Order";
+            var updatedTypeName = "Job Order";
 
             // Act
-            var updateResult = await _applicationTypeDAL.UpdateApplicationTypeAsync(new ApplicationType(newId, updatedTypeName));
-            var updatedApplicationType = await _applicationTypeDAL.GetApplicationTypeByIdAsync(newId);
+            var updateResult = await _dal.UpdateApplicationTypeAsync(new ApplicationTypeDTO(newId, updatedTypeName));
+            var updatedApplicationType = await _dal.GetApplicationTypeByIdAsync(newId);
 
             // Assert
             updateResult.Should().BeTrue();
@@ -81,16 +76,16 @@ namespace DataAccessLayer.Tests
         {
             // Arrange
             var typeName = $"TestType_{Guid.NewGuid()}";
-            var newId = await _applicationTypeDAL.CreateApplicationTypeAsync(typeName);
+            var newId = await _dal.CreateApplicationTypeAsync(typeName);
 
             // Act
-            var deleteResult = await _applicationTypeDAL.DeleteApplicationTypeAsync(newId);
-            var deletedType = await _applicationTypeDAL.GetApplicationTypeByIdAsync(newId);
+            var deleteResult = await _dal.DeleteApplicationTypeAsync(new ApplicationTypeDTO(newId, typeName));
+            var deletedType = await _dal.GetApplicationTypeByIdAsync(newId);
 
             // Assert
             deleteResult.Should().BeTrue();
             deletedType.Should().BeNull();
         }
-    
+
     }
 }
