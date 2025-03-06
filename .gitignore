@@ -4,3 +4,5 @@ obj/
 *.cache
 *.csproj.nuget.*
 project.assets.json
+*.suo
+*.cache

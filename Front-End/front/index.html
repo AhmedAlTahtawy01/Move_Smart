@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desktop - 1</title>
+    <link rel="stylesheet" href="styles.css">
+
+  
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">تسجيل الدخول</div>
+        <div class="login-subheader">مرحبا</div>
+        <div class="login-description">الرجاء ادخال بيانات الاعتماد الخاصة بك</div>
+        <form class="login-form" onsubmit="return validateForm()">
+            <input type="text" id="email" class="login-input" placeholder="البريد الالكتروني">
+            <div id="emailError" class="error-message">الرجاء ادخال بريد الكتروني صحيح</div>
+            
+            <input type="password" id="password" class="login-input" placeholder="كلمة المرور">
+            <div id="passwordError" class="error-message">الرجاء ادخال كلمة مرور لا تقل عن 6 احرف</div>
+            
+            <button type="submit" class="login-button">تسجيل الدخول</button>
+        </form>
+    </div>
+
+   
+    <script src="script.js"></script>
+</body>
+</html>
