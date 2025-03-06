@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MoveSmartAPIs")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d25d92f6700b782a5814c4e7e1a02e2a2f550ab9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c652daf0654544425dc784b76efd786c49d32e07")]
 [assembly: System.Reflection.AssemblyProductAttribute("MoveSmartAPIs")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MoveSmartAPIs")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
